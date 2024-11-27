@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: acatusse <acatusse@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/09/24 16:50:46 by acatusse          #+#    #+#              #
-#    Updated: 2024/09/24 16:50:48 by acatusse         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 INCLUDES = Zombie.hpp
 SRC = main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
 NAME = zombie
