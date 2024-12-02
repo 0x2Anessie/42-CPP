@@ -34,7 +34,9 @@ int	main()
 		std::cerr << e.what() << '\n';
 		std::cout << RED_BOLD << "Wrong Name" << std::endl;
 	}
-
+	
+	//***********************************************************//
+	
 	try
 	{
 		bureaucrat = new Bureaucrat("Jake99", 1);
