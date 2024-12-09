@@ -4,6 +4,8 @@
 #include <stdexcept>
 #include "Form.hpp"
 
+class Form;
+
 /*
 ** Les exceptions sont definies comme des classes imbriquées dans une autre classe
 ** et sont généralement nommées avec le suffixe Exception.

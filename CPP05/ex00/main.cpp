@@ -15,6 +15,7 @@ int	main()
 		bureaucrat = new Bureaucrat("Amy Santiago", 1);
 		std::cout << *bureaucrat;
 		delete bureaucrat;
+		bureaucrat = NULL;
 	}
 	catch(const std::exception& e)
 	{
@@ -28,6 +29,7 @@ int	main()
 		bureaucrat = new Bureaucrat("", 1);
 		std::cout << *bureaucrat;
 		delete bureaucrat;
+		bureaucrat = NULL;
 	}
 	catch(const std::exception& e)
 	{
@@ -42,6 +44,7 @@ int	main()
 		bureaucrat = new Bureaucrat("Jake99", 1);
 		std::cout << *bureaucrat;
 		delete bureaucrat;
+		bureaucrat = NULL;
 	}
 	catch(const std::exception& e)
 	{
@@ -56,6 +59,7 @@ int	main()
 		bureaucrat = new Bureaucrat("Ray Holt", 0);
 		std::cout << *bureaucrat;
 		delete bureaucrat;
+		bureaucrat = NULL;
 	}
 	catch(const std::exception& e)
 	{
@@ -70,6 +74,7 @@ int	main()
 		bureaucrat = new Bureaucrat("Jake Peralta", 151);
 		std::cout << *bureaucrat;
 		delete bureaucrat;
+		bureaucrat = NULL;
 	}
 	catch(const std::exception& e)
 	{
