@@ -1,129 +1,123 @@
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
 
-int	main()
+#define TEST(expression, message) \
+	if (expression) \
+		std::cout << GREEN << "Test passed : " << message << RESET << std::endl; \
+	else \
+		std::cout << RED << "Test failed : " << message << RESET << std::endl;
+
+int main()
 {
-	Bureaucrat	*bureaucrat = NULL;
-	Form		*form = NULL;
+	Bureaucrat *original = NULL;
+	Bureaucrat *original2 = NULL;
+	Form *form = NULL;
+	Form *copy = NULL;
 
-	// ━━━━━━━━━━━━━━━━━━ Valid Name and grade ━━━━━━━━━━━━━━━━━━ //
-
+	std::cout << YELLOW << "Form creation test" << RESET << std::endl;
 	try
 	{
-		bureaucrat = new Bureaucrat("Amy Santiago", 1);
-		std::cout << *bureaucrat;
-		delete bureaucrat;
-		bureaucrat = NULL;
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	// ━━━━━━━━━━━━━━━━━━━━━━━ Wrong Name ━━━━━━━━━━━━━━━━━━━━━━━ //
-
-	try
-	{
-		bureaucrat = new Bureaucrat("", 1);
-		std::cout << *bureaucrat;
-		delete bureaucrat;
-		bureaucrat = NULL;
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-		std::cout << RED_BOLD << "Wrong Name" << std::endl;
-	}
-	
-	//***********************************************************//
-	
-	try
-	{
-		bureaucrat = new Bureaucrat("Jake99", 1);
-		std::cout << *bureaucrat;
-		delete bureaucrat;
-		bureaucrat = NULL;
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-		std::cout << RED_BOLD << "Wrong Name" << std::endl;
-	}
-
-	// ━━━━━━━━━━━━━━━━━━━━━ Grade Too High ━━━━━━━━━━━━━━━━━━━━━ //
-
-	try
-	{
-		bureaucrat = new Bureaucrat("Ray Holt", 0);
-		std::cout << *bureaucrat;
-		delete bureaucrat;
-		bureaucrat = NULL;
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-		std::cout << RED_BOLD << "Grade is too high" << std::endl;
-	}
-
-	// ━━━━━━━━━━━━━━━━━━━━━━ Grade Too Low ━━━━━━━━━━━━━━━━━━━━━ //
-
-	try
-	{
-		bureaucrat = new Bureaucrat("Jake Peralta", 151);
-		std::cout << *bureaucrat;
-		delete bureaucrat;
-		bureaucrat = NULL;
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-		std::cout << RED_BOLD << "Grade is too low" << std::endl;
-	}
-
-	// ━━━━━━━━━━━━━━━━━ Valid Grade sign form ━━━━━━━━━━━━━━━━━━ //
-
-	try
-	{
-		bureaucrat = new Bureaucrat("Amy Santiago", 1);
-		form = new Form("Form", 1, 150);
-		std::cout << *bureaucrat;
+		form = new Form("Form1", 42, 24);
 		std::cout << *form;
-		bureaucrat->signForm(*form);
-		std::cout << *form;
-		if (form->getIsSigned())
-			std::cout << GREEN << "Form is signed" << RESET << std::endl;
-		delete bureaucrat;
+		TEST(form->getName() == "Form1", "Form name is ok");
+		TEST(form->getGradeToSign() == 42, "Form sign grade is ok");
+		TEST(form->getGradeToExecute() == 24, "Form exec grade is ok");
 		delete form;
-		bureaucrat = NULL;
 		form = NULL;
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << "Exception caught: " << e.what() << std::endl;
+		TEST(false, "Should not be here");
 	}
 
-	// ━━━━━━━━━━━━ Grade too low try to sign form ━━━━━━━━━━━━━━ //
-
+	std::cout << std::endl << YELLOW << "Copy constructor test" << RESET << std::endl;
 	try
 	{
-		bureaucrat = new Bureaucrat("Jake Peralta", 151);
-		form = new Form("Form", 50, 150);
-		std::cout << *bureaucrat;
+		form = new Form("Form1", 42, 24);
+		copy = new Form(*form);
 		std::cout << *form;
-		bureaucrat->signForm(*form);
-		std::cout << *form;
-		if (form->getIsSigned())
-			std::cout << GREEN << "Form is signed" << RESET << std::endl;
-		else
-			std::cout << RED << "Form is not signed" << RESET << std::endl;
-		delete bureaucrat;
+		std::cout << *copy;
+		TEST(form->getName() == copy->getName(), "Copy name is ok");
+		TEST(form->getGradeToSign() == copy->getGradeToSign(), "Copy sign grade is ok");
+		TEST(form->getGradeToExecute() == copy->getGradeToExecute(), "Copy exec grade is ok");
 		delete form;
-		bureaucrat = NULL;
+		delete copy;
+		form = NULL;
+		copy = NULL;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << "Exception caught: " << e.what() << std::endl;
+		TEST(false, "Should not be here");
+	}
+
+	std::cout << std::endl << YELLOW << "Signed form test" << RESET << std::endl;
+	try
+	{
+		original = new Bureaucrat("Antonio", 5);
+		form = new Form("Form1", 42, 24);
+		std::cout << *original;
+		std::cout << *form;
+		original->signForm(*form);
+		std::cout << *form;
+		TEST(form->getIsSigned() == true, "Form is signed");
+		delete original;
+		delete form;
+		original = NULL;
 		form = NULL;
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
-		std::cout << RED_BOLD << "Grade is too low to sign form" << std::endl;
+		std::cerr << "Exception caught: " << e.what() << std::endl;
+		TEST(false, "Should not be here");
+	}
+
+	std::cout << std::endl << YELLOW << "Signed form with too low grade test" << RESET << std::endl;
+	try
+	{
+		original = new Bureaucrat("Fernando", 50);
+		form = new Form("Form1", 42, 24);
+		std::cout << *original;
+		std::cout << *form;
+		original->signForm(*form);
+		std::cout << *form;
+		TEST(form->getIsSigned() == false, "Form is not signed");
+		delete original;
+		delete form;
+		original = NULL;
+		form = NULL;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << "Exception caught: " << e.what() << std::endl;
+		TEST(false, "Should not be here");
+	}
+
+	std::cout << std::endl << YELLOW << "Signed form with 2 bureaucrat test" << RESET << std::endl;
+	try
+	{
+		original = new Bureaucrat("Marta", 23);
+		original2 = new Bureaucrat("Valentina", 6);
+		form = new Form("Form1", 42, 24);
+		std::cout << *original;
+		std::cout << *original2;
+		std::cout << *form;
+		original->signForm(*form);
+		std::cout << *form;
+		original2->signForm(*form);
+		TEST(form->getIsSigned() == true, "Form is signed one time");
+		delete original;
+		delete original2;
+		delete form;
+		original = NULL;
+		original2 = NULL;
+		form = NULL;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << "Exception caught: " << e.what() << std::endl;
+		TEST(false, "Should not be here");
 	}
 }
+

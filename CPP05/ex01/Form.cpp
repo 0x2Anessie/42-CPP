@@ -59,7 +59,7 @@ int Form::getGradeToExecute() const
 void Form::beSigned(Bureaucrat const &b)
 {
 	if (isSigned)
-		return;
+		throw Form::FormAlreadySignedException();
 	if (b.getGrade() > gradeToSign)
 		throw Form::GradeTooLowException();
 	isSigned = true;
