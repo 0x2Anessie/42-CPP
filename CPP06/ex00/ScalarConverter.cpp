@@ -89,45 +89,47 @@ void ScalarConverter::convert(std::string const &literal)
 		else if(!std::isprint(static_cast<char>(i)))
 			std::cout << "char: Non displayable" << std::endl;
 		else
-			std::cout << BOLD << MAGENTA << "Converted to CHAR " << RESET << BOLD << "  ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << "'" << static_cast<char>(i) << "'" << std::endl;
+		std::cout << BOLD << MAGENTA << "Converted to CHAR " << RESET << BOLD << "  ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << "'" << static_cast<char>(i) << "'" << std::endl;
 		std::cout << BOLD << MAGENTA << "Converted to INT " << RESET << BOLD << "    ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << i << std::endl;
 		std::cout << BOLD << MAGENTA << "Converted to FLOAT " << RESET << BOLD << "  ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << std::fixed << std::setprecision(1) << static_cast<float>(i) << "f" << std::endl;
 		std::cout << BOLD << MAGENTA << "Converted to DOUBLE " << RESET << BOLD << " ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << std::fixed << std::setprecision(1) << static_cast<double>(i) << std::endl;
 		return ;
 	}
 
-		// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ CONVERTI UN FLOAT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+	// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ CONVERTI UN FLOAT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 	errno = 0;
 	float f = std::strtof(literal.c_str(), &endptr);
 	if((*endptr == 'f' || *endptr == 'F') && *(endptr + 1) == '\0' && errno != ERANGE)
 	{
-		std::cout << "char: ";
+		std::cout << BOLD << "FLOAT TO CONVERT: " << MAGENTA << f << RESET << std::endl;
+
+		// Convertion to CHAR
 		if(f >= 0 && f <= 127 && std::isprint(static_cast<int>(f)))
-			std::cout << "'" << static_cast<char>(f) << "'" << std::endl;
+			std::cout << BOLD << MAGENTA << "Converted to CHAR " << RESET << BOLD << "   ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << "'" << static_cast<char>(f) << "'" << RESET << std::endl;
 		else if(f < 0 || f > 127)
-			std::cout << "impossible" << std::endl;
+			std::cout << MAGENTA << BOLD << "Convertion to CHAR " << RESET << BOLD << "  ༼つಠ益ಠ༽つ" << RED_BOLD << " impossible" << RESET << std::endl;
 		else if(f < ' ' || f > '~')
-			std::cout << "Non displayable" << std::endl;
+			std::cout << MAGENTA << BOLD << "Convertion to CHAR " << RESET << BOLD << "  ༼つಠ益ಠ༽つ" << RED_BOLD << " non displayable" << RESET << std::endl;
 		else
-			std::cout << "impossible" << std::endl;
+			std::cout << MAGENTA << BOLD << "Convertion to CHAR " << RESET << BOLD << "  ༼つಠ益ಠ༽つ" << RED_BOLD << " impossible" << RESET << std::endl;
 
-		std::cout << "int: ";
+		// Convertion to INT
 		if(f >= static_cast<float>(INT_MIN) && f <= static_cast<float>(INT_MAX))
-			std::cout << static_cast<int>(f) << std::endl;
+			std::cout << BOLD << MAGENTA << "Converted to INT " << RESET << BOLD << "    ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << static_cast<int>(f) << RESET << std::endl;
 		else
-			std::cout << "impossible" << std::endl;
+			std::cout << MAGENTA << BOLD << "Convertion to INT " << RESET << BOLD << "   ༼つಠ益ಠ༽つ" << RED_BOLD << " impossible" << RESET << std::endl;
 
-		std::cout << "float: ";
+		// Convertion to FLOAT
 		if(f >= -FLT_MAX && f <= FLT_MAX)
-			std::cout << std::fixed << std::setprecision(1) << f << "f" << std::endl;
+			std::cout << BOLD << MAGENTA << "Converted to FLOAT " << RESET << BOLD << "  ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << std::fixed << std::setprecision(1) << f << "f" << RESET << std::endl;
 		else
-			std::cout << "impossible" << std::endl;
+			std::cout << MAGENTA << BOLD << "Convertion to FLOAT " << RESET << BOLD <<  "༼つಠ益ಠ༽つ" << RED_BOLD << "impossible, you are over FLOATMAX or under FLOATMIN" << RESET << std::endl;
 
-		std::cout << "double: ";
+		// Convertion to DOUBLE
 		if(f >= -DBL_MAX && f <= DBL_MAX)
-			std::cout << std::fixed << std::setprecision(1) << static_cast<double>(f) << std::endl;
+			std::cout << BOLD << MAGENTA << "Converted to DOUBLE " << RESET << BOLD << " ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << std::fixed << std::setprecision(1) << static_cast<double>(f) << RESET << std::endl;
 		else
-			std::cout << "impossible" << std::endl;
+			std::cout << MAGENTA << BOLD << "Convertion to DOUBLE " << RESET << BOLD << "༼つಠ益ಠ༽つ" << RED_BOLD << "impossible, you are over DOUBLEMAX or under DOUBLEMIN" << RESET << std::endl;
 		return ;
 	}
 
@@ -136,33 +138,35 @@ void ScalarConverter::convert(std::string const &literal)
 	double d = std::strtod(literal.c_str(), &endptr);
 	if(*endptr == '\0' && errno != ERANGE)
 	{
-		std::cout << "char: ";
-		if(d >= 0 && d <= 127 && std::isprint(static_cast<int>(d)))
-			std::cout << "'" << static_cast<char>(d) << "'" << std::endl;
-		else if(d < 0 || d > 127)
-			std::cout << "impossible" << std::endl;
-		else if(d < ' ' || d > '~')
-			std::cout << "Non displayable" << std::endl;
-		else
-			std::cout << "impossible" << std::endl;
+		// Convertion to CHAR
 
-		std::cout << "int: ";
+		std::cout << BOLD << "DOUBLE TO CONVERT: " << MAGENTA << d << RESET << std::endl;
+		if(d >= 0 && d <= 127 && std::isprint(static_cast<int>(d)))
+			std::cout << BOLD << MAGENTA << "Converted to CHAR " << RESET << BOLD << "   ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << "'" << static_cast<char>(d) << "'" << RESET << std::endl;
+		else if(d < 0 || d > 127)
+			std::cout << MAGENTA << BOLD << "Convertion to CHAR " << RESET << BOLD << "  ༼つಠ益ಠ༽つ" << RED_BOLD << " impossible" << RESET << std::endl;
+		else if(d < ' ' || d > '~')
+			std::cout << MAGENTA << BOLD << "Convertion to CHAR " << RESET << BOLD << "  ༼つಠ益ಠ༽つ" << RED_BOLD << " Non displayable" << RESET << std::endl;
+		else
+			std::cout << MAGENTA << BOLD << "Convertion to CHAR " << RESET << BOLD << "  ༼つಠ益ಠ༽つ" << RED_BOLD << " impossible" << RESET << std::endl;
+
+		// Convertion to INT
 		if(d >= static_cast<double>(INT_MIN) && d <= static_cast<double>(INT_MAX))
 			std::cout << static_cast<int>(d) << std::endl;
 		else
 			std::cout << "impossible" << std::endl;
 
-		std::cout << "float: ";
+		// Convertion to FLOAT
 		if(d > FLT_MAX)
-			std::cout << "inf" << std::endl;
+			std::cout << BOLD << MAGENTA << "Converted to FLOAT " << RESET << BOLD << "   ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << "inf" << RESET << std::endl;
 		else if(d < -FLT_MAX)
-			std::cout << "-inf" << std::endl;
+			std::cout << BOLD << MAGENTA << "Converted to FLOAT " << RESET << BOLD << "   ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << "-inf" << RESET << std::endl;
 		else if(d == 0)
-			std::cout << "0.0f" << std::endl;
+			std::cout << BOLD << MAGENTA << "Converted to FLOAT " << RESET << BOLD << "   ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << "0.0f" << RESET << std::endl;
 		else
-			std::cout << std::fixed << std::setprecision(1) << static_cast<float>(d) << "f" << std::endl;
+			std::cout << BOLD << MAGENTA << "Converted to FLOAT " << RESET << BOLD << "   ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << std::fixed << std::setprecision(1) << static_cast<float>(d) << "f" << RESET << std::endl;
 
-		std::cout << "double: ";
+		// Convertion to DOUBLE
 		if(d > DBL_MAX)
 			std::cout << "inf" << std::endl;
 		else if(d < -DBL_MAX)
@@ -173,8 +177,8 @@ void ScalarConverter::convert(std::string const &literal)
 			std::cout << std::fixed << std::setprecision(1) << d << std::endl;
 		return ;
 	}
-	std::cout << "char: impossible" << std::endl;
-	std::cout << "int: impossible" << std::endl;
-	std::cout << "float: impossible" << std::endl;
-	std::cout << "double: impossible" << std::endl;
+	std::cout << MAGENTA << BOLD << "Convertion to CHAR " << RESET << BOLD << "  ༼つಠ益ಠ༽つ" << RED_BOLD << " impossible" << RESET << std::endl;
+	std::cout << MAGENTA << BOLD << "Convertion to INT " << RESET << BOLD << "   ༼つಠ益ಠ༽つ" << RED_BOLD << " impossible" << RESET << std::endl;
+	std::cout << MAGENTA << BOLD << "Convertion to FLOAT " << RESET << BOLD << " ༼つಠ益ಠ༽つ" << RED_BOLD << " impossible" << RESET << std::endl;
+	std::cout << MAGENTA << BOLD << "Convertion to DOUBLE " << RESET << BOLD << "༼つಠ益ಠ༽つ" << RED_BOLD << " impossible" << RESET << std::endl;
 }
