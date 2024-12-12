@@ -1,4 +1,4 @@
-NAME = 		Serializer
+NAME = 		Base
 INCLUDES =	A.hpp B.hpp C.hpp Base.hpp Fonction.hpp
 SRC =		main.cpp Base.cpp Fonction.cpp
 
