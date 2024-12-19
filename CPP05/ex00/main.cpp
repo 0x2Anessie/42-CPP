@@ -10,20 +10,23 @@ int	main()
 
 	// ━━━━━━━━━━━━━━━━━━ Valid Name and grade ━━━━━━━━━━━━━━━━━━ //
 
+	std::cout << BOLD << "\nTEST #1:" << GREEN << " Valid Name and grade bureaucrat" << RESET << std::endl;
 	try
 	{
 		bureaucrat = new Bureaucrat("Amy Santiago", 1);
-		std::cout << *bureaucrat;
+		std::cout << BOLD << "Bureaucrat announce : " << RESET << *bureaucrat;
 		delete bureaucrat;
 		bureaucrat = NULL;
 	}
 	catch(const std::exception& e)
 	{
+		std::cout << BOLD << "Exception caught: " << RESET;
 		std::cerr << e.what() << '\n';
 	}
 
 	// ━━━━━━━━━━━━━━━━━━━━━━━ Wrong Name ━━━━━━━━━━━━━━━━━━━━━━━ //
-
+	std::cout << BOLD << "\nTEST #2:" << RED << " Invalid name bureaucrat" << RESET << std::endl;
+	std::cout << "Trying to create a bureaucrat with no name..." << RESET << std::endl;
 	try
 	{
 		bureaucrat = new Bureaucrat("", 1);
@@ -33,12 +36,14 @@ int	main()
 	}
 	catch(const std::exception& e)
 	{
+		std::cout << BOLD << "Exception caught: " << RESET;
 		std::cerr << e.what() << '\n';
-		std::cout << RED_BOLD << "Wrong Name" << std::endl;
 	}
 	
 	//***********************************************************//
 	
+	std::cout << BOLD << "\nTEST #3:" << RED << " Invalid name bureaucrat" << RESET << std::endl;
+	std::cout << "Trying to create a bureaucrat with the name 'Jake99'..." << RESET << std::endl;
 	try
 	{
 		bureaucrat = new Bureaucrat("Jake99", 1);
@@ -48,12 +53,14 @@ int	main()
 	}
 	catch(const std::exception& e)
 	{
+		std::cout << BOLD << "Exception caught: " << RESET;
 		std::cerr << e.what() << '\n';
-		std::cout << RED_BOLD << "Wrong Name" << std::endl;
 	}
 
 	// ━━━━━━━━━━━━━━━━━━━━━ Grade Too High ━━━━━━━━━━━━━━━━━━━━━ //
 
+	std::cout << BOLD << "\nTEST #4:" << RED << " Grade too high exception" << RESET << std::endl;
+	std::cout << "Trying to create Ray Holt with a grade of 0..." << RESET << std::endl;
 	try
 	{
 		bureaucrat = new Bureaucrat("Ray Holt", 0);
@@ -63,12 +70,14 @@ int	main()
 	}
 	catch(const std::exception& e)
 	{
+		std::cout << BOLD << "Exception caught: " << RESET;
 		std::cerr << e.what() << '\n';
-		std::cout << RED_BOLD << "Grade is too high" << std::endl;
 	}
 
 	// ━━━━━━━━━━━━━━━━━━━━━━ Grade Too Low ━━━━━━━━━━━━━━━━━━━━━ //
 
+	std::cout << BOLD << "\nTEST #5:" << RED << " Grade too low exception" << RESET << std::endl;
+	std::cout << "Trying to create Jake Peralta with a grade of 151..." << RESET << std::endl;
 	try
 	{
 		bureaucrat = new Bureaucrat("Jake Peralta", 151);
@@ -78,7 +87,8 @@ int	main()
 	}
 	catch(const std::exception& e)
 	{
+		std::cout << BOLD << "Exception caught: " << RESET;
 		std::cerr << e.what() << '\n';
-		std::cout << RED_BOLD << "Grade is too low" << std::endl;
 	}
+	std::cout << std::endl;
 }

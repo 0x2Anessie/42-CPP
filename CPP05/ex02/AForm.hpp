@@ -50,4 +50,4 @@ class AForm
 		bool				isSigned;
 };
 
-std::ostream &operator <<(std::ostream &os, const Form &f);
+std::ostream &operator <<(std::ostream &os, const AForm &f);

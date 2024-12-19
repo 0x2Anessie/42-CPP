@@ -4,68 +4,93 @@
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
 
-#include "Bureaucrat.hpp"
-#include "AForm.hpp"
-#include "ShrubberyCreationForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "PresidentialPardonForm.hpp"
-
-#define TEST(expression, message) \
-	if (expression) \
-		std::cout << GREEN << "Test passed : " << message << RESET << std::endl; \
-	else \
-		std::cout << RED << "Test failed : " << message << RESET << std::endl;
-
-
 int main()
 {
-	Bureaucrat b1("Yanis", 138);
-	Bureaucrat b2("Karim", 46);
-	Bureaucrat b3("Sofia", 6);
-	Bureaucrat b4("Lydia", 150);
-	ShrubberyCreationForm form1("Agadir shrub");
-	RobotomyRequestForm form2("Rayan");
-	PresidentialPardonForm form3("Yasmine");
+	std::cout << std::endl;
+	Bureaucrat				b1("Jake Peralta", 150);
+	Bureaucrat				b2("Amy Santiago", 1);
+	Bureaucrat				b3("Charles Boyle", 50);
+	PresidentialPardonForm	presidentialPardonForm1("Presidential Pardon Form");
+	PresidentialPardonForm	presidentialPardonForm2("Presidential Pardon Form");
+	PresidentialPardonForm	presidentialPardonForm3("Presidential Pardon Form");
+	RobotomyRequestForm		robotomyRequestForm1("Robotomy Request Form");
+	RobotomyRequestForm		robotomyRequestForm2("Robotomy Request Form");
+	RobotomyRequestForm		robotomyRequestForm3("Robotomy Request Form");
+	ShrubberyCreationForm	shrubberyCreationForm1("Shrubbery Creation Form");
+	ShrubberyCreationForm	shrubberyCreationForm2("Shrubbery Creation Form");
+	ShrubberyCreationForm	shrubberyCreationForm3("Shrubbery Creation Form");
 
-	std::cout << std::endl << YELLOW << "Bureaucrat signing and executing forms" << RESET << std::endl;
+	std::cout << BOLD << BLUE << "\nWE HAVE 3 BUREAUCRATS :" << RESET << std::endl;
+	std::cout << b1;
+	std::cout << b2;
+	std::cout << b3;
+
+	std::cout << BOLD << BLUE << "\nAND 3 FORMS THEY WILL TRY TO SIGN AND EXECUTE:" << RESET << std::endl;
+	std::cout << presidentialPardonForm1 << std::endl;
+	std::cout << robotomyRequestForm1 << std::endl;
+	std::cout << shrubberyCreationForm1;
+
+	std::cout << BOLD << BLUE << "\nPRESIDENTIAL PARDON FORM TESTS" << RESET << std::endl;
 	try
 	{
-		std::cout << std::endl << UNDERLINE << "ShrubberyCreationForm" << RESET << std::endl;
-		std::cout << std::endl << b4 << std::endl;
-		std::cout << form1 << std::endl;
-		b4.signForm(form1);
-		std::cout << std::endl << b1 << std::endl;
-		b1.signForm(form1);
-		std::cout << form1 << std::endl;
-		b1.executeForm(form1);
-		b1.incrementGrade();
-		std::cout << std::endl << b1 << std::endl;
-		b1.executeForm(form1);
-		std::cout << std::endl << UNDERLINE << "RobotomyRequestForm" << RESET << std::endl;
-		std::cout << std::endl << form2 << std::endl;
-		b4.signForm(form2);
-		std::cout << std::endl << b2 << std::endl;
-		b2.signForm(form2);
-		b2.executeForm(form2);
-		b2.incrementGrade();
-		std::cout << std::endl << b2 << std::endl;
-		b2.executeForm(form2);
-		std::cout << std::endl << UNDERLINE << "PresidentialPardonForm" << RESET << std::endl;
-		std::cout << std::endl << form3 << std::endl;
-		b4.signForm(form3);
-		std::cout << std::endl << b3 << std::endl;
-		b3.signForm(form3);
-		b3.executeForm(form3);
-		b3.incrementGrade();
-		std::cout << std::endl << b3 << std::endl;
-		b3.executeForm(form3);
-		std::cout << std::endl;
-		TEST(true, "Bureaucrat signing and executing forms");
-		std::cout << std::endl;
+		std::cout << BOLD << "\nTEST #1: Jake" << RESET << std::endl;
+		b1.signForm(presidentialPardonForm1);
+		b1.executeForm(presidentialPardonForm1);
+
+		std::cout << BOLD << "\nTEST #2: Amy" << RESET << GREEN << std::endl;
+		b2.signForm(presidentialPardonForm2);
+		b2.executeForm(presidentialPardonForm2);
+
+		std::cout << BOLD << "\nTEST #3: Charles" << RESET << std::endl;
+		b3.signForm(presidentialPardonForm3);
+		b3.executeForm(presidentialPardonForm3);
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << "Exception caught: " << e.what() << std::endl;
-		TEST(false, "Should not be here");
+		std::cout << BOLD << "Exception caught: " << RESET;
+		std::cerr << e.what() << '\n';
 	}
+
+	std::cout << BOLD << BLUE << "\nROBOTOMY REQUEST FORM TESTS" << RESET << std::endl;
+	try
+	{
+		std::cout << BOLD << "\nTEST #1: Jake" << RESET << std::endl;
+		b1.signForm(robotomyRequestForm1);
+		b1.executeForm(robotomyRequestForm1);
+
+		std::cout << BOLD << "\nTEST #2: Amy" << RESET << std::endl;
+		b2.signForm(robotomyRequestForm2);
+		b2.executeForm(robotomyRequestForm2);
+
+		std::cout << BOLD << "\nTEST #3: Charles" << RESET << std::endl;
+		b3.signForm(robotomyRequestForm3);
+		b3.executeForm(robotomyRequestForm3);
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << BOLD << "Exception caught: " << RESET;
+		std::cerr << e.what() << '\n';
+	}
+
+	std::cout << BOLD << BLUE << "\nSHRUBBERY CREATION FORM TESTS" << RESET << std::endl;
+	try
+	{
+		std::cout << BOLD << "\nTEST #1: Jake" << RESET << std::endl;
+		b1.signForm(shrubberyCreationForm1);
+		b1.executeForm(shrubberyCreationForm1);
+
+		std::cout << BOLD << "\nTEST #2: Amy" << RESET << std::endl;
+		b2.signForm(shrubberyCreationForm2);
+		b2.executeForm(shrubberyCreationForm2);
+
+		std::cout << BOLD << "\nTEST #3: Charles" << RESET << std::endl;
+		b3.signForm(shrubberyCreationForm3);
+		b3.executeForm(shrubberyCreationForm3);
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << BOLD << "Exception caught: " << RESET;
+		std::cerr << e.what() << '\n';
+	}
+	std::cout << std::endl;
 }

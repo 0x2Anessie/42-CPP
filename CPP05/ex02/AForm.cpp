@@ -8,13 +8,13 @@ AForm::AForm(const std::string _name, int _gradeToSign, int _gradeToExecute) : n
 		throw AForm::GradeTooHighException();
 	if (gradeToSign > 150 || gradeToExecute > 150)
 		throw AForm::GradeTooLowException();
-	std::cout << GREEN_BOLD << "Form constructor called!" << RESET << std::endl;
+	std::cout << GREEN_BOLD << "AForm constructor called!" << RESET << std::endl;
 }
 
 AForm::AForm(AForm const &other)
 : name(other.name), gradeToSign(other.gradeToSign), gradeToExecute(other.gradeToExecute), isSigned(other.isSigned)
 {
-	std::cout << GREEN_BOLD << "Form copy constructor called!" << RESET << std::endl;
+	std::cout << GREEN_BOLD << "AForm copy constructor called!" << RESET << std::endl;
 }
 
 AForm &AForm::operator=(AForm const &other)
@@ -23,13 +23,13 @@ AForm &AForm::operator=(AForm const &other)
 	{
 		isSigned = other.isSigned;
 	}
-	std::cout << GREEN_BOLD << "Form assignation operator called!" << RESET << std::endl;
+	std::cout << GREEN_BOLD << "AForm assignation operator called!" << RESET << std::endl;
 	return *this;
 }
 
 AForm::~AForm()
 {
-	std::cout << RED_BOLD << "Form destructor called!" << RESET << std::endl;
+	std::cout << RED_BOLD << "AForm destructor called!" << RESET << std::endl;
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ GETTERS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
@@ -80,6 +80,11 @@ const char *AForm::GradeTooLowException::what() const throw()
 const char *AForm::FormAlreadySignedException::what() const throw()
 {
 	return RED "Form is already signed" RESET;
+}
+
+const char *AForm::FormNotSignedException::what() const throw()
+{
+	return RED "Form is not signed" RESET;
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ OVERLOAD OPERATOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
