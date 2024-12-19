@@ -59,7 +59,7 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 	file << "   |   " << std::endl;
 	file.close();
 
-	std::cout << BLUE << "ShrubberyCreationForm " << target << " has been executed by " << executor.getName() << RESET << std::endl;
+	std::cout << "ShrubberyCreationForm " << target << " has been executed by " << executor.getName() << RESET << std::endl;
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ EXCEPTIONS DEFINITIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //

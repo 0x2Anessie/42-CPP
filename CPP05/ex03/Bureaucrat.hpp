@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include "AForm.hpp"
 
-class Form;
+class AForm;
 
 /*
 ** Les exceptions sont definies comme des classes imbriquées dans une autre classe

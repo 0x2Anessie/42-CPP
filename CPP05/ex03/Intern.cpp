@@ -6,28 +6,27 @@
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ INTERN CLASS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
-
 Intern::Intern()
 {
-	std::cout << GREEN_BOLD << "Intern default constructor called!" << std::endl;
+	std::cout << GREEN_BOLD << "Intern default constructor called!" << RESET << std::endl;
 }
 
 Intern::Intern(Intern const &other)
 {
 	(void)other;
-	std::cout << GREEN_BOLD << "Intern copy constructor called!" << std::endl;
+	std::cout << GREEN_BOLD << "Intern copy constructor called!" << RESET << std::endl;
 }
 
 Intern &Intern::operator=(Intern const &other)
 {
 	(void)other;
-	std::cout << GREEN_BOLD << "Intern assignation operator called!" << std::endl;
+	std::cout << GREEN_BOLD << "Intern assignation operator called!" << RESET << std::endl;
 	return (*this);
 }
 
 Intern::~Intern()
 {
-	std::cout << RED_BOLD << "Intern destructor called!" << std::endl;
+	std::cout << RED_BOLD << "Intern destructor called!" << RESET << std::endl;
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ MAKEFORM FUNCTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
@@ -42,7 +41,7 @@ AForm *Intern::makeForm(std::string const &formName, std::string const &target) 
 	form = formName == "presidential pardon" ? new PresidentialPardonForm(target) : form;
 
 	if(form)
-		std::cout << "Intern creates " << formName << " form" << std::endl;
+		std::cout << RESET << "Intern creates " << formName << " form" << std::endl;
 	else
 		throw Intern::InvalidFormNameException();
 	return form;

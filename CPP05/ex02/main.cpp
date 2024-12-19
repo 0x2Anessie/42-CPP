@@ -10,15 +10,15 @@ int main()
 	Bureaucrat				b1("Jake Peralta", 150);
 	Bureaucrat				b2("Amy Santiago", 1);
 	Bureaucrat				b3("Charles Boyle", 50);
-	PresidentialPardonForm	presidentialPardonForm1("Presidential Pardon Form");
-	PresidentialPardonForm	presidentialPardonForm2("Presidential Pardon Form");
-	PresidentialPardonForm	presidentialPardonForm3("Presidential Pardon Form");
-	RobotomyRequestForm		robotomyRequestForm1("Robotomy Request Form");
-	RobotomyRequestForm		robotomyRequestForm2("Robotomy Request Form");
-	RobotomyRequestForm		robotomyRequestForm3("Robotomy Request Form");
-	ShrubberyCreationForm	shrubberyCreationForm1("Shrubbery Creation Form");
-	ShrubberyCreationForm	shrubberyCreationForm2("Shrubbery Creation Form");
-	ShrubberyCreationForm	shrubberyCreationForm3("Shrubbery Creation Form");
+	PresidentialPardonForm	presidentialPardonForm1("Jake Peralta");
+	PresidentialPardonForm	presidentialPardonForm2("Amy Santiago");
+	PresidentialPardonForm	presidentialPardonForm3("Charles Boyle");
+	RobotomyRequestForm		robotomyRequestForm1("Jake Peralta");
+	RobotomyRequestForm		robotomyRequestForm2("Amy Santiago");
+	RobotomyRequestForm		robotomyRequestForm3("Charles Boyle");
+	ShrubberyCreationForm	shrubberyCreationForm1("Jake Peralta");
+	ShrubberyCreationForm	shrubberyCreationForm2("Amy Santiago");
+	ShrubberyCreationForm	shrubberyCreationForm3("Charles Boyle");
 
 	std::cout << BOLD << BLUE << "\nWE HAVE 3 BUREAUCRATS :" << RESET << std::endl;
 	std::cout << b1;
@@ -37,7 +37,7 @@ int main()
 		b1.signForm(presidentialPardonForm1);
 		b1.executeForm(presidentialPardonForm1);
 
-		std::cout << BOLD << "\nTEST #2: Amy" << RESET << GREEN << std::endl;
+		std::cout << BOLD << "\nTEST #2: Amy" << RESET << std::endl;
 		b2.signForm(presidentialPardonForm2);
 		b2.executeForm(presidentialPardonForm2);
 
