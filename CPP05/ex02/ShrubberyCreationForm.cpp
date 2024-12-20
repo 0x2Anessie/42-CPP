@@ -40,6 +40,7 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 		throw AForm::FormNotSignedException();
 	if(executor.getGrade() > this->getGradeToExecute())
 		throw AForm::GradeTooLowException();
+
 	// creer le nom du fichier
 	std::string filename = target + "_shrubbery";
 	// ouvrir le fichier + option c_str pour convertir en char* le std::string
@@ -58,7 +59,6 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 	file << "*******" << std::endl;
 	file << "   |   " << std::endl;
 	file.close();
-
 	std::cout << "ShrubberyCreationForm " << target << " has been executed by " << executor.getName() << RESET << std::endl;
 }
 

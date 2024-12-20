@@ -42,9 +42,10 @@ void RobotomyRequestForm::execute(Bureaucrat const &executor) const
 		throw AForm::GradeTooLowException();
 	std::cout << BOLD << "Makes some drilling noises" << RESET << std::endl;
 	/*
-	initialise le generateur de nombres aleatoires en se servant
-	de time(0) pour avoir une valeur de depart different a chaque
-	 execution
+	L'initialisation du générateur de nombres aléatoires avec l'heure actuelle (std::srand(std::time(0)))
+	garantit que les séquences de nombres aléatoires sont différentes à chaque exécution du programme. Ensuite,
+	std::rand() génère un nombre aléatoire, et l'opérateur modulo (% 2) est utilisé pour vérifier si ce nombre
+	est pair ou impair. Si le nombre est pair, le robotomize est réussi, sinon il a échoué.
 	*/
 	std::srand(std::time(0));
 	if(std::rand() % 2 == 0)

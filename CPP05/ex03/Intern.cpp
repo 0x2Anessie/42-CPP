@@ -36,6 +36,12 @@ AForm *Intern::makeForm(std::string const &formName, std::string const &target) 
 {
 	AForm *form = NULL;
 
+	/*
+	on verifie si le nom du formulaire est valide, si oui on crée le formulaire correspondant
+	sinon form reste NULL et on passe au prochain test.
+	si a la fin form est toujours NULL, on lance une exception.
+	-> condition ? expression_if_true : expression_if_false;
+	*/
 	form = formName == "shrubbery creation" ? new ShrubberyCreationForm(target) : form;
 	form = formName == "robotomy request" ? new RobotomyRequestForm(target) : form;
 	form = formName == "presidential pardon" ? new PresidentialPardonForm(target) : form;
