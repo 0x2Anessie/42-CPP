@@ -17,7 +17,7 @@ ScalarConverter &ScalarConverter::operator=(ScalarConverter const &other)
 ScalarConverter::~ScalarConverter()
 {}
 
-
+// Pour toute nos convertions on utilise static_cast pour convertir un type en un autre
 void ScalarConverter::convert(std::string const &literal)
 {
 	char *endptr;
@@ -89,7 +89,7 @@ void ScalarConverter::convert(std::string const &literal)
 		else if(!std::isprint(static_cast<char>(i)))
 			std::cout << MAGENTA << BOLD << "Convertion to CHAR " << RESET << BOLD << "  ༼つಠ益ಠ༽つ" << RED_BOLD << " non displayable" << std::endl;
 		else
-		std::cout << BOLD << MAGENTA << "Converted to CHAR " << RESET << BOLD << "  ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << "'" << static_cast<char>(i) << "'" << std::endl;
+		std::cout << BOLD << MAGENTA << "Converted to CHAR " << RESET << BOLD << "   ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << "'" << static_cast<char>(i) << "'" << std::endl;
 		std::cout << BOLD << MAGENTA << "Converted to INT " << RESET << BOLD << "    ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << i << std::endl;
 		std::cout << BOLD << MAGENTA << "Converted to FLOAT " << RESET << BOLD << "  ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << std::fixed << std::setprecision(1) << static_cast<float>(i) << "f" << std::endl;
 		std::cout << BOLD << MAGENTA << "Converted to DOUBLE " << RESET << BOLD << " ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << std::fixed << std::setprecision(1) << static_cast<double>(i) << std::endl;
@@ -108,7 +108,6 @@ void ScalarConverter::convert(std::string const &literal)
 			std::cout << BOLD << MAGENTA << "Converted to CHAR " << RESET << BOLD << "   ༼∩☉ل͜☉༽⊃━☆ﾟ. * ･ ｡ﾟ " << GREEN_BOLD << "'" << static_cast<char>(f) << "'" << RESET << std::endl;
 		else if(f < 0 || f > 127)
 			std::cout << MAGENTA << BOLD << "Convertion to CHAR " << RESET << BOLD << "  ༼つಠ益ಠ༽つ" << RED_BOLD << " impossible" << RESET << std::endl;
-		/*
 		else if(f < ' ' || f > '~')
 			std::cout << MAGENTA << BOLD << "Convertion to CHAR " << RESET << BOLD << "  ༼つಠ益ಠ༽つ" << RED_BOLD << " non displayable" << RESET << std::endl;
 		/* Sinon on affiche impossible */
