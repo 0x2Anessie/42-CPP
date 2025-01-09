@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 template <typename T, typename P>
 void iter(T *array, int length, P *func)
 {
@@ -23,5 +25,5 @@ void iter(T *array, int length, P *func)
 #define BOLD		"\x1b[1m"
 #define UNDERLINE	"\x1b[4m"
 #define RESET		"\x1b[0m"
-#define RED_BOLD "\033[1;31m"
-#define GREEN_BOLD "\033[1;32m"
+#define RED_BOLD	"\033[1;31m"
+#define GREEN_BOLD	"\033[1;32m"
