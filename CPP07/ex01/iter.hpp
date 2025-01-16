@@ -11,7 +11,7 @@ void iter(T *array, int length, P *func)
 	}
 }
 
-// ANSI color codes
+//━━━━━━━━ANSI CODES━━━━━━━━━//
 #define RED			"\x1b[31m"
 #define GREEN		"\x1b[32m"
 #define YELLOW		"\x1b[33m"
@@ -21,7 +21,6 @@ void iter(T *array, int length, P *func)
 #define WHITE		"\x1b[37m"
 #define RESET		"\x1b[0m"
 
-// ANSI text style codes
 #define BOLD		"\x1b[1m"
 #define UNDERLINE	"\x1b[4m"
 #define RESET		"\x1b[0m"

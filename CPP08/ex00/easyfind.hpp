@@ -1,33 +1,16 @@
 #pragma once
 
+#include <iterator>
+#include <algorithm>
+#include <typeinfo>
 #include <iostream>
-#include <exception>
-#include "Array.tpp"
+#include <stdexcept>
+#include <limits>
 
 template <typename T>
-class Array
-{
-	public:
-		Array();
-		Array(unsigned int n);
-		Array(const Array &other);
-		Array &operator=(const Array &other);
-		~Array();
+typename T::iterator easyfind(T &container, int value);
 
-		T &operator[](unsigned int i);
-		const T &operator[](unsigned int i) const;
-		unsigned int size() const;
-
-		class OutLimitsException : public std::exception
-		{
-			public:
-				virtual const char *what() const throw();
-		};
-
-	private:
-		T *_elem;
-		unsigned int _size;
-};
+#include "easyfind.tpp"
 
 //━━━━━━━━ANSI CODES━━━━━━━━━//
 #define RED			"\x1b[31m"

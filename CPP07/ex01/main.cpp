@@ -20,6 +20,7 @@ void strPrint(std::string &str)
 
 int main()
 {
+	std::cout << "\033c";
 	int intArray[] = {1, 2, 3, 4, 5};
 	float floatArray[] = {1.1f, 2.2f, 3.3f, 4.4f, 5.5f};
 	std::string strArray[] = {"one", "two", "three", "four", "five"};

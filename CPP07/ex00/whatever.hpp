@@ -32,7 +32,7 @@ T const &max(const T &a, const T &b )
 	return ( a > b ? a : b ); // if a > b, return a, else return b
 }
 
-// ANSI color codes
+//━━━━━━━━ANSI CODES━━━━━━━━━//
 #define RED			"\x1b[31m"
 #define GREEN		"\x1b[32m"
 #define YELLOW		"\x1b[33m"
@@ -42,9 +42,8 @@ T const &max(const T &a, const T &b )
 #define WHITE		"\x1b[37m"
 #define RESET		"\x1b[0m"
 
-// ANSI text style codes
 #define BOLD		"\x1b[1m"
 #define UNDERLINE	"\x1b[4m"
 #define RESET		"\x1b[0m"
-#define RED_BOLD "\033[1;31m"
-#define GREEN_BOLD "\033[1;32m"
+#define RED_BOLD	"\033[1;31m"
+#define GREEN_BOLD	"\033[1;32m"
