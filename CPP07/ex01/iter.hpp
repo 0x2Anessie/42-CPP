@@ -2,6 +2,11 @@
 
 #include <iostream>
 
+/*
+	Adresse du tableau // Taille du tableau // Fonction à appliquer
+	Se balade dans le tableau et applique la fonction à chaque élément,
+	c'est a dire print le contenu de chaque élément
+*/
 template <typename T, typename P>
 void iter(T *array, int length, P *func)
 {

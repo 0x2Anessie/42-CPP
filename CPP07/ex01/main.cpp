@@ -35,7 +35,7 @@ int main()
 
 	std::cout << GREEN_BOLD << std::endl << "PRINTING THE STRING ARRAY USING ITER :" << RESET << std::endl;
 	iter(strArray, 5, strPrint);
-	std::cout << std::endl;
+	std::cout << "\n" << std::endl;
 
 	return 0;
 }

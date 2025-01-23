@@ -11,7 +11,7 @@ int main( void )
 	std::cout << MAGENTA << BOLD << "valeurs de a et b avant swap :" << RESET << std::endl;
 	std::cout << "a = " << a << ", b = " << b << std::endl;
 	
-	::swap( a, b );
+	::swap( a, b ); // :: permet d'etre sur d'appeler ma fonction swap
 
 	std::cout << MAGENTA << BOLD << "valeurs de a et b apres swap :" << RESET << std::endl;
 	std::cout << "a = " << a << ", b = " << b << std::endl;

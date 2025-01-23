@@ -32,6 +32,7 @@ Array<T> &Array<T>::operator=(const Array &other)
 	return *this;
 }
 
+
 template<typename T>
 Array<T>::~Array()
 {

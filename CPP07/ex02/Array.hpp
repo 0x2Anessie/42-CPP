@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <exception>
-#include "Array.tpp"
 
 template <typename T>
 class Array
@@ -16,6 +15,7 @@ class Array
 
 		T &operator[](unsigned int i);
 		const T &operator[](unsigned int i) const;
+
 		unsigned int size() const;
 
 		class OutLimitsException : public std::exception
@@ -28,6 +28,8 @@ class Array
 		T *_elem;
 		unsigned int _size;
 };
+
+#include "Array.tpp"
 
 //━━━━━━━━ANSI CODES━━━━━━━━━//
 #define RED			"\x1b[31m"
