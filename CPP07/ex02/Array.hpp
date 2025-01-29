@@ -7,17 +7,22 @@ template <typename T>
 class Array
 {
 	public:
+
+		// ━━━━━━━━━━━━━━━━ Constructors ━━━━━━━━━━━━━━━━ //
 		Array();
 		Array(unsigned int n);
 		Array(const Array &other);
 		Array &operator=(const Array &other);
 		~Array();
 
+		// ━━━━━━━━━━━━━━━━ Operator [] ━━━━━━━━━━━━━━━━ //
 		T &operator[](unsigned int i);
 		const T &operator[](unsigned int i) const;
 
+		// ━━━━━━━━━━━━━━━━━ Get size ━━━━━━━━━━━━━━━━━━ //
 		unsigned int size() const;
 
+		// ━━━━━━━━━━━━━━━━ Exceptions ━━━━━━━━━━━━━━━━━ //
 		class OutLimitsException : public std::exception
 		{
 			public:
@@ -25,8 +30,8 @@ class Array
 		};
 
 	private:
-		T *_elem;
-		unsigned int _size;
+		T *_elem; // Array of elements
+		unsigned int _size; // Size of the array
 };
 
 #include "Array.tpp"

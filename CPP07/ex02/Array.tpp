@@ -1,13 +1,22 @@
 #include "Array.hpp"
 
+/*
+	Constructor without size
+*/
 template<typename T>
 Array<T>::Array() : _elem(NULL), _size(0)
 {}
 
+/*
+	Constructor with size
+*/
 template<typename T>
 Array<T>::Array(unsigned int n) : _elem(new T[n]()), _size(n)
 {}
 
+/*
+	Copy constructor
+*/
 template<typename T>
 Array<T>::Array(const Array &other) : _elem(new T[other._size]), _size(other._size)
 {
@@ -17,6 +26,9 @@ Array<T>::Array(const Array &other) : _elem(new T[other._size]), _size(other._si
 	}
 }
 
+/*
+	Assignment operator
+*/
 template<typename T>
 Array<T> &Array<T>::operator=(const Array &other)
 {
@@ -32,13 +44,18 @@ Array<T> &Array<T>::operator=(const Array &other)
 	return *this;
 }
 
-
+/*
+	Destructor
+*/
 template<typename T>
 Array<T>::~Array()
 {
 	delete[] _elem;
 }
 
+/*
+	Operator [] to access the array elements with bounds checking
+*/
 template<typename T>
 T &Array<T>::operator[](unsigned int i)
 {
@@ -47,6 +64,9 @@ T &Array<T>::operator[](unsigned int i)
 	return _elem[i];
 }
 
+/*
+	Const operator [] to access the array elements with bounds checking
+*/
 template<typename T>
 const T &Array<T>::operator[](unsigned int i) const
 {
@@ -55,12 +75,18 @@ const T &Array<T>::operator[](unsigned int i) const
 	return _elem[i];
 }
 
+/*
+	Return the size of the array
+*/
 template<typename T>
 unsigned int Array<T>::size() const
 {
 	return _size;
 }
 
+/*
+	Exception message
+*/
 template<typename T>
 const char *Array<T>::OutLimitsException::what() const throw()
 {
