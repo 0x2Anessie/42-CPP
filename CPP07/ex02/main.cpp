@@ -75,7 +75,7 @@ int main()
 				std::cout << BOLD << "Line " << i + 1 << ": " << RESET << copiedIntArray[i] << "\n";
 	std::cout << std::endl;
 
-	std::cout << YELLOW << "Test exception [] operator:\n" << RESET;
+	std::cout << RED_BOLD << "Trying to change the value of the sixth int of an array of five ints...\n" << RESET;
 	try
 	{
 		intArray[6] = 42;
