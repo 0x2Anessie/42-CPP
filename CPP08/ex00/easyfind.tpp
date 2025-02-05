@@ -2,18 +2,30 @@
 
 #include "easyfind.hpp"
 
+/*
+	cette fonction doit trouver la première occurrence de nb dans intContainer.
+	std::invalid_argument est une classe d'exception qui est définie dans la bibliotheque
+	standard C++. Elle est utilisée pour signaler qu'un argument invalide a été passé à
+	une fonction.
+*/
 template <typename T>
-typename T::iterator easyfind(T &container, int value)
+typename T::iterator easyfind(T &intContainer, int nb)
 {
-	if(container.empty())
-		throw std::invalid_argument("Container is empty");
-	if(typeid(typename T::value_type) != typeid(int))
-		throw std::invalid_argument("Container is not of type int");
-	if(value < std::numeric_limits<int>::min() || value > std::numeric_limits<int>::max())
-		throw std::invalid_argument("Value is out of range");
+	// si le container est vide
+	if(intContainer.empty())
+		throw std::invalid_argument("The container is empty");
 
-	typename T::iterator it = std::find(container.begin(), container.end(), value);
-	if(it == container.end())
-		throw std::invalid_argument("Value not found");
-	return it;
+	// si le container n'est pas de type int
+	if(typeid(typename T::value_type) != typeid(int))
+		throw std::invalid_argument("The container is not of type int");
+
+	// si la valeur est en dehors des limites d'un int
+	if(nb < std::numeric_limits<int>::min() || nb > std::numeric_limits<int>::max())
+		throw std::invalid_argument("The value is out of range");
+
+	// si la valeur ne peut pas être trouvée entre le premier et le dernier élément du container
+	typename T::iterator it = std::find(intContainer.begin(), intContainer.end(), nb);
+	if(it == intContainer.end())
+		throw std::invalid_argument("The value cannot be found");
+	return it; // retourne l'itérateur pointant vers la première occurrence de nb
 }

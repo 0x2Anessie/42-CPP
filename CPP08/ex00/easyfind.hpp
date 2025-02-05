@@ -8,7 +8,7 @@
 #include <limits>
 
 template <typename T>
-typename T::iterator easyfind(T &container, int value);
+typename T::iterator easyfind(T &intContainer, int nb);
 
 #include "easyfind.tpp"
 
