@@ -1,11 +1,18 @@
 #include "easyfind.hpp"
 #include <vector>
 
+/*
+	Un container est une classe ou une structure de donnees de taille dynamique.
+	Ils utilisent des itérateurs pour parcourir les éléments comme std::vector,
+	std::list, std::map, std::set.
+	->	Ici on utilise std::vector<int> vec(array, array + 5) pour initialiser un
+		vecteur d'entiers avec les valeurs de array.
+*/
 int main()
 {
 	std::cout << "\033c";
 	int array[] = {1, 2, 3, 4, 5};
-	std::vector<int> vec(array, array + 5);
+	std::vector<int> vec(array, array + 5); // vec est un conteneur d'entiers
 
 	std::cout << BOLD << MAGENTA << "Contenu du conteneur d'ints : " << RESET;
 	for (std::vector<int>::iterator it = vec.begin(); it != vec.end(); ++it)

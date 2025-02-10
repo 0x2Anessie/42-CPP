@@ -68,7 +68,7 @@ const char *Span::SpanException::what() const throw()
 
 const char *Span::SpanTooEmptyException::what() const throw()
 {
-	return RED "Span is too empty" RESET;
+	return RED "Span is empty" RESET;
 }
 
 const char *Span::OutOfRangeException::what() const throw()

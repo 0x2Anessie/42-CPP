@@ -1,18 +1,20 @@
 #include "Span.hpp"
 
+
 int main()
 {
-	std::cout << YELLOW << "42 test" << RESET << std::endl;
+	std::cout << "\033c";
+	std::cout << BLUE << BOLD << "Results of the 42 tests :" << RESET << std::endl;
 	Span sp = Span(5);
 	sp.addNumber(6);
 	sp.addNumber(3);
 	sp.addNumber(17);
 	sp.addNumber(9);
 	sp.addNumber(11);
-	std::cout << sp.shortestSpan() << std::endl;
-	std::cout << sp.longestSpan() << std::endl;
+	std::cout << BOLD << "Shortest Span: " << RESET << sp.shortestSpan() << std::endl; // 11 - 9 = 2
+	std::cout << BOLD << "Longest Span: " << RESET << sp.longestSpan() << std::endl; // 17 - 3 = 14
 
-	std::cout << std::endl << YELLOW << "Test span exception" << RESET << std::endl;
+	std::cout << std::endl << BLUE << BOLD << "Test Span exception :" << RESET << std::endl;
 	try
 	{
 		Span sp2 = Span(3);
@@ -23,20 +25,20 @@ int main()
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << "Exception caught: " << e.what() << std::endl;
+		std::cerr << BOLD << "Exception caught: " << e.what() << RESET << std::endl;
 	}
 
-	std::cout << std::endl << YELLOW << "Test span too empty exception" << RESET << std::endl;
+	std::cout << std::endl << BLUE << BOLD << "Trying to create an empty Span" << RESET << std::endl;
 	try
 	{
 		Span sp3 = Span(0);
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << "Exception caught: " << e.what() << std::endl;
+		std::cerr << BOLD << "Exception caught: " << e.what() << RESET << std::endl;
 	}
 
-	std::cout << std::endl << YELLOW << "Test short and longest exception" << RESET << std::endl;
+	std::cout << std::endl << BLUE << BOLD << "Test short and longest exception" << RESET << std::endl;
 	try
 	{
 		Span sp4 = Span(1);
@@ -45,7 +47,7 @@ int main()
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << "Exception caught: " << e.what() << std::endl;
+		std::cerr << BOLD << "Exception caught: " << e.what() << RESET << std::endl;
 	}
 	try
 	{
@@ -59,9 +61,9 @@ int main()
 	}
 
 	std::cout << std::endl << YELLOW << "Test addNumbers" << RESET << std::endl;
-	Span sp6 = Span(10000);
+	Span sp6 = Span(13001);
 	std::vector<int> vec;
-	for (int i = 1; i <= 10000; i++)
+	for (int i = 1; i <= 13001; i++)
 		vec.push_back(i);
 	sp6.addNumbers(vec.begin(), vec.end());
 	std::cout << sp6.longestSpan() << std::endl;
