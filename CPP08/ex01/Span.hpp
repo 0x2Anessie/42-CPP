@@ -14,6 +14,8 @@ class Span
 		Span(unsigned int n);
 		Span(Span const &other);
 		Span &operator=(Span const &other);
+		int& operator[](unsigned int index);
+		const int& operator[](unsigned int index) const;
 		~Span();
 
 		void addNumber(unsigned int n);

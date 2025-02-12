@@ -75,3 +75,17 @@ const char *Span::OutOfRangeException::what() const throw()
 {
 	return RED "Value is out of range" RESET;
 }
+
+int& Span::operator[](unsigned int index)
+{
+	if (index >= _numbers.size())
+		throw Span::OutOfRangeException();
+	return _numbers[index];
+}
+
+const int& Span::operator[](unsigned int index) const
+{
+	if (index >= _numbers.size())
+		throw Span::OutOfRangeException();
+	return _numbers[index];
+}

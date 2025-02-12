@@ -14,7 +14,7 @@ int main()
 	int array[] = {1, 2, 3, 4, 5};
 	std::vector<int> vec(array, array + 5); // vec est un conteneur d'entiers
 
-	std::cout << BOLD << MAGENTA << "Contenu du conteneur d'ints : " << RESET;
+	std::cout << GREEN_BOLD << "Vector content: " << RESET;
 	for (std::vector<int>::iterator it = vec.begin(); it != vec.end(); ++it)
 	{
 		std::cout << *it << " ";
