@@ -7,7 +7,6 @@
 #include <limits>
 #include <iterator>
 
-
 class Span
 {
 	public:
@@ -47,6 +46,11 @@ class Span
 		std::vector<int> _numbers;
 };
 
+/*
+	on vérifie si la taille de _numbers + count est supérieur à _n
+	et on vérifie si les éléments sont dans la plage des int
+	et on ajoute les éléments dans _numbers grâce à un itérateur
+*/
 template <typename Iterator>
 void Span::addNumbers(Iterator begin, Iterator end)
 {
@@ -62,7 +66,6 @@ void Span::addNumbers(Iterator begin, Iterator end)
 	for(Iterator it = begin; it != end; it++)
 		_numbers.push_back(*it);
 }
-
 
 //━━━━━━━━ANSI CODES━━━━━━━━━//
 #define RED			"\x1b[31m"

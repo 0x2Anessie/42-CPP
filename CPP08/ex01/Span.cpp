@@ -3,12 +3,31 @@
 Span::Span(unsigned int n) : _n(n)
 {
 	if(n == 0)
-		throw Span::SpanTooEmptyException();
+	throw Span::SpanTooEmptyException();
 }
 
 Span::Span(Span const &other)
 {
 	*this = other;
+}
+
+Span::~Span()
+{}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ SURCHARGE D'OPERATEUR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+
+int& Span::operator[](unsigned int index)
+{
+	if (index >= _numbers.size())
+		throw Span::OutOfRangeException();
+	return _numbers[index];
+}
+
+const int& Span::operator[](unsigned int index) const
+{
+	if (index >= _numbers.size())
+		throw Span::OutOfRangeException();
+	return _numbers[index];
 }
 
 Span &Span::operator=(Span const &other)
@@ -23,8 +42,7 @@ Span &Span::operator=(Span const &other)
 	return *this;
 }
 
-Span::~Span()
-{}
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ CLASS FT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
 void Span::addNumber(unsigned int n)
 {
@@ -61,6 +79,8 @@ long int Span::longestSpan()
 	return maxSpan;
 }
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ EXCEPTIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+
 const char *Span::SpanException::what() const throw()
 {
 	return RED "Span is full" RESET;
@@ -74,18 +94,4 @@ const char *Span::SpanTooEmptyException::what() const throw()
 const char *Span::OutOfRangeException::what() const throw()
 {
 	return RED "Value is out of range" RESET;
-}
-
-int& Span::operator[](unsigned int index)
-{
-	if (index >= _numbers.size())
-		throw Span::OutOfRangeException();
-	return _numbers[index];
-}
-
-const int& Span::operator[](unsigned int index) const
-{
-	if (index >= _numbers.size())
-		throw Span::OutOfRangeException();
-	return _numbers[index];
 }
