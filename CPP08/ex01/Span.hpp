@@ -42,14 +42,16 @@ class Span
 		};
 
 	private:
-		unsigned int _n;
-		std::vector<int> _numbers;
+		unsigned int _n; // Taille maximale du conteneur
+		std::vector<int> _numbers; // Conteneur de nombres
 };
 
 /*
-	on vérifie si la taille de _numbers + count est supérieur à _n
-	et on vérifie si les éléments sont dans la plage des int
-	et on ajoute les éléments dans _numbers grâce à un itérateur
+	addNumbers: Permet de remplir le conteneur avec une liste de nombres a partir d'un iterateur de debut et de fin
+	-> On parcourt la liste de nombres et on verifie si chaque nombre est dans les limites d'un int
+	-> On incremente le compteur
+	-> Si le nombre d'elements a ajouter est superieur a la taille maximale du conteneur, on lance une exception
+	-> On ajoute chaque nombre a la liste
 */
 template <typename Iterator>
 void Span::addNumbers(Iterator begin, Iterator end)

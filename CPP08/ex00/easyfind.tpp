@@ -7,6 +7,9 @@
 	std::invalid_argument est une classe d'exception qui est définie dans la bibliotheque
 	standard C++. Elle est utilisée pour signaler qu'un argument invalide a été passé à
 	une fonction.
+	la methode find() de la bibliotheque standard C++ renvoie un itérateur pointant vers
+	la première occurrence de nb dans le container. Si la valeur n'est pas trouvée, la
+	méthode renvoie un itérateur pointant vers la fin du container.
 */
 template <typename T>
 typename T::iterator easyfind(T &intContainer, int nb)
