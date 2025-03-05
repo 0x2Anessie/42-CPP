@@ -1,9 +1,5 @@
 #include "Span.hpp"
 
-/*
-	La methode utilisee pour remplir le conteneur dans le cas ou on doit y mettre un grand nombre
-	d'elements 
-*/
 int main()
 {
 	std::cout << "\033c";
@@ -12,7 +8,7 @@ int main()
 
 	std::cout << GREEN_BOLD << "BASIC TEST WITH RANDOM NUMBERS:" << RESET << std::endl;
 
-	Span Test1 = Span(5); // Conteneur de 5 éléments max
+	Span Test1 = Span(5);
 
 	Test1.addNumber(6);
 	Test1.addNumber(3);
@@ -25,27 +21,27 @@ int main()
 		std::cout << Test1[i] << " ";
 
 	std::cout << std::endl;
-	std::cout << BOLD << "Shortest Span: " << RESET << Test1.shortestSpan() << std::endl; // 11 - 9 = 2
-	std::cout << BOLD << "Longest Span: " << RESET << Test1.longestSpan() << std::endl; // 17 - 3 = 14
+	std::cout << BOLD << "Shortest Span: " << RESET << Test1.shortestSpan() << std::endl;
+	std::cout << BOLD << "Longest Span: " << RESET << Test1.longestSpan() << std::endl;
 
-	// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ TEST ADDNUMBERS FT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+	// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ TEST ADDNUMBERssss FT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
 	std::cout << std::endl << GREEN_BOLD << "CREATE A SPAN OF 10000+ VALUES" << RESET << std::endl;
 
-	Span Test2 = Span(13001); // Conteneur de 13001 éléments max
+	Span Test2 = Span(13001);
 
-	std::vector<int> vec; // On utilise un vecteur pour ajouter 
+	std::vector<int> vec; // pour recuperer les valeurs de begin a end
 	for (int i = 1; i <= 13001; i++)
-		vec.push_back(i); // On ajoute les éléments de 1 à 13001 dans le vecteur
+		vec.push_back(i);
 
-	Test2.addNumbers(vec.begin(), vec.end()); // On ajoute les éléments du vecteur dans le conteneur
+	Test2.addNumbers(vec.begin(), vec.end());
 	
 	// std::cout << BOLD << "Numbers in the container: " << RESET;
 	// for (int i = 0; i < 13001; i++)
 	// 	std::cout << Test2[i] << " ";
 	// std::cout << std::endl;
 	
-	std::cout << BOLD << "Shortest Span: " << RESET << Test2.shortestSpan() << std::endl; // 11 - 9 = 2
+	std::cout << BOLD << "Shortest Span: " << RESET << Test2.shortestSpan() << std::endl;
 	std::cout << BOLD << "Longest Span: " << RESET << Test2.longestSpan() << std::endl;
 
 	// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ADDING TO A FULL SPAN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
@@ -113,11 +109,9 @@ int main()
 
 		for (int i = 1; i <= 42; i++)
 			vec3.push_back(i);
-
 		vec3.push_back(2147483648);
-		Test7.addNumbers(vec3.begin(), vec3.end());
 
-		std::cout << Test7.longestSpan() << std::endl;
+		Test7.addNumbers(vec3.begin(), vec3.end());
 	}
 	catch(const std::exception& e)
 	{

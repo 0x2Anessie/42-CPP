@@ -10,31 +10,35 @@
 class Span
 {
 	public:
+		// ━━━━━━━━━━━━━━ declarations ━━━━━━━━━━━━━━ //
 		Span(unsigned int n);
 		Span(Span const &other);
+		~Span();
+
+		// ━━━━━━━━━ surcharge d'operateurs ━━━━━━━━━ //
 		Span &operator=(Span const &other);
 		int& operator[](unsigned int index);
 		const int& operator[](unsigned int index) const;
-		~Span();
 
+		// ━━━━━━━━━━━━━━━━ methodes ━━━━━━━━━━━━━━━━ //
 		void addNumber(unsigned int n);
 		long int shortestSpan();
 		long int longestSpan();
+
 		template <typename Iterator>
 		void addNumbers(Iterator begin, Iterator end);
 
+		// ━━━━━━━━━━━━━━━ exceptions ━━━━━━━━━━━━━━━ //
 		class SpanException : public std::exception
 		{
 			public:
 				virtual const char *what() const throw();
 		};
-
 		class SpanTooEmptyException : public std::exception
 		{
 			public:
 				virtual const char *what() const throw();
 		};
-
 		class OutOfRangeException : public std::exception
 		{
 			public:
@@ -42,32 +46,30 @@ class Span
 		};
 
 	private:
-		unsigned int _n; // Taille maximale du conteneur
-		std::vector<int> _numbers; // Conteneur de nombres
+		unsigned int maxSize; // taille maximale du conteneur
+		std::vector<int> container; // conteneur de nombres
 };
 
-/*
-	addNumbers: Permet de remplir le conteneur avec une liste de nombres a partir d'un iterateur de debut et de fin
-	-> On parcourt la liste de nombres et on verifie si chaque nombre est dans les limites d'un int
-	-> On incremente le compteur
-	-> Si le nombre d'elements a ajouter est superieur a la taille maximale du conteneur, on lance une exception
-	-> On ajoute chaque nombre a la liste
-*/
+
 template <typename Iterator>
 void Span::addNumbers(Iterator begin, Iterator end)
 {
 	unsigned int count = 0;
+
 	for(Iterator it = begin; it != end; it++)
 	{
 		if(*it < std::numeric_limits<int>::min() || *it > std::numeric_limits<int>::max())
 			throw Span::OutOfRangeException();
-		count++;
+		count++; // on compte le nombre d'elements a ajouter
 	}
-	if (_numbers.size() + count > _n)
+
+	if (container.size() + count > maxSize) // check si y'a encore de la place dans le conteneur
 		throw Span::SpanException();
-	for(Iterator it = begin; it != end; it++)
-		_numbers.push_back(*it);
+
+	for(Iterator it = begin; it != end; it++) // remplissage du conteneur avec la valeur de l'iterateur
+		container.push_back(*it);
 }
+
 
 //━━━━━━━━ANSI CODES━━━━━━━━━//
 #define RED			"\x1b[31m"

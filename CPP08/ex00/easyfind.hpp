@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <limits>
 
+// on renvoie un iterateur pour le conteneur T
 template <typename T>
 typename T::iterator easyfind(T &intContainer, int nb);
 

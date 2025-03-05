@@ -10,32 +10,36 @@ template <typename T>
 class MutantStack : public std::stack<T>
 {
 	public:
-		MutantStack() : std::stack<T>() {} // call the constructor of the parent class
-		MutantStack(const MutantStack<T>& other) : std::stack<T>(other) {} // call the copy constructor of the parent class
+		// ━━━━━━━━━━━━━━━ definitions  ━━━━━━━━━━━━━━━ //
+		MutantStack() : std::stack<T>() {}
+		MutantStack(const MutantStack<T>& other) : std::stack<T>(other) {}
+		virtual ~MutantStack() {}
 
-		MutantStack<T>& operator=(const MutantStack<T>& other) // call the operator= of the parent class
+		// ━━━━━━━━━ surcharge d'operateurs ━━━━━━━━━━━ //
+		MutantStack<T>& operator=(const MutantStack<T>& other)
 		{
 			if (this != &other)
 				std::stack<T>::operator=(other);
 			return *this;
 		}
-
-		virtual ~MutantStack() {} // call the destructor of the parent class
-
-		
+		// ━━━━━━━━━ definition des iterateurs ━━━━━━━━━ //
 		typedef typename std::stack<T>::container_type::iterator iterator;
 		typedef typename std::stack<T>::container_type::const_iterator const_iterator;
 		typedef typename std::stack<T>::container_type::reverse_iterator reverse_iterator;
 		typedef typename std::stack<T>::container_type::const_reverse_iterator const_reverse_iterator;
 
-		iterator begin() { return std::stack<T>::c.begin(); } // return the iterator of the beginning of the stack
-		iterator end() { return std::stack<T>::c.end(); } // return the iterator of the end of the stack
-		const_iterator begin() const { return std::stack<T>::c.begin(); } // return the const iterator of the beginning of the stack
-		const_iterator end() const { return std::stack<T>::c.end(); } // return the const iterator of the end of the stack
-		reverse_iterator rbegin() { return std::stack<T>::c.rbegin(); } // return the reverse iterator wich is the end of the stack
-		reverse_iterator rend() { return std::stack<T>::c.rend(); } // return the reverse iterator wich is the beginning of the stack
-		const_reverse_iterator rbegin() const { return std::stack<T>::c.rbegin(); } // return the const reverse iterator wich is the end of the stack
-		const_reverse_iterator rend() const { return std::stack<T>::c.rend(); } // return the const reverse iterator wich is the beginning of the stack
+		// ━━━━━━━━━━━━━━━━ methodes pour les iterateurs ━━━━━━━━━━━━━━━━ //
+		iterator begin() { return std::stack<T>::c.begin(); }
+		iterator end() { return std::stack<T>::c.end(); }
+
+		const_iterator begin() const { return std::stack<T>::c.begin(); }
+		const_iterator end() const { return std::stack<T>::c.end(); }
+
+		reverse_iterator rbegin() { return std::stack<T>::c.rbegin(); }
+		reverse_iterator rend() { return std::stack<T>::c.rend(); }
+
+		const_reverse_iterator rbegin() const { return std::stack<T>::c.rbegin(); }
+		const_reverse_iterator rend() const { return std::stack<T>::c.rend(); }
 };
 
 //━━━━━━━━ANSI CODES━━━━━━━━━//
