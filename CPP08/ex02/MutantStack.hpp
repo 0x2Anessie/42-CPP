@@ -42,6 +42,7 @@ class MutantStack : public std::stack<T>
 		const_reverse_iterator rend() const { return std::stack<T>::c.rend(); }
 };
 
+
 //━━━━━━━━ANSI CODES━━━━━━━━━//
 #define RED			"\x1b[31m"
 #define GREEN		"\x1b[32m"
