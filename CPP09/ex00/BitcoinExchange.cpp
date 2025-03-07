@@ -18,6 +18,10 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
 BitcoinExchange::~BitcoinExchange()
 {}
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ UTILS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+
+
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ DATA PARSING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
 bool BitcoinExchange::checkValue(const std::string &value) const
@@ -25,10 +29,6 @@ bool BitcoinExchange::checkValue(const std::string &value) const
 
 bool BitcoinExchange::checkDate(const std::string &date) const
 {}
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ UTILS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
-
-
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PROCESSING DATA METHODS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
