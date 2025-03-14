@@ -1,7 +1,14 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 #include <map>
+#include <algorithm>
+#include <sstream>
+#include <fstream>
+#include <stdexcept>
+#include <cctype>
+#include <cstdlib>
 
 class BitcoinExchange
 {

@@ -32,7 +32,14 @@ bool BitcoinExchange::checkDate(const std::string &date) const
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PROCESSING DATA METHODS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
+void BitcoinExchange::getData(const std::string &filename)
+{
+	std::ifstream file(filename.c_str());
+	if (!file)
+		throw std::runtime_error("ERROR! File could not be opened");
 
+	std::string currentLine;
+}
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ GET BTC VALUE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
