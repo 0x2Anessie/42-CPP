@@ -34,12 +34,36 @@ bool BitcoinExchange::checkDate(const std::string &date) const
 
 void BitcoinExchange::getData(const std::string &filename)
 {
+	std::string currentLine;
+	std::string date;
+	double exchangeRate;
 	std::ifstream file(filename.c_str());
+
 	if (!file)
 		throw std::runtime_error("ERROR! File could not be opened");
 
-	std::string currentLine;
+	if (std::getline(file, currentLine))
+	{
+		if (currentLine != "date,exchange_rate")
+		{
+			std::istringstream LineStream(currentLine);
+
+			if (std::getline(LineStream, date, ',') && (LineStream >> exchangeRate))
+				ValuePerDate[date] = exchangeRate;
+		}
+	}
+
+	while (getline(file, currentLine))
+	{
+		std::istringstream LineStream(currentLine);
+
+		if (getline(LineStream, date, ',') && (LineStream >> exchangeRate))
+			ValuePerDate[date] = exchangeRate;
+
+	}
 }
+
+void BitcoinExchange::processData(const std::string &filename)
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ GET BTC VALUE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
