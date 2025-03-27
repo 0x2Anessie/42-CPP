@@ -1,7 +1,7 @@
-NAME = 		btc
+NAME = 		PmergeMe
 
-INCLUDES =	BitcoinExchange.hpp
-SRC =		main.cpp BitcoinExchange.cpp
+INCLUDES =	PmergeMe.hpp
+SRC =		main.cpp PmergeMe.cpp
 
 OBJ = 		$(SRC:.cpp=.o)
 CXX = 		c++

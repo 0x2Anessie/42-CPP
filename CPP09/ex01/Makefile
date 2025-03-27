@@ -1,7 +1,7 @@
-NAME = 		btc
+NAME = 		RPN
 
-INCLUDES =	BitcoinExchange.hpp
-SRC =		main.cpp BitcoinExchange.cpp
+INCLUDES =	RPN.hpp
+SRC =		main.cpp RPN.cpp
 
 OBJ = 		$(SRC:.cpp=.o)
 CXX = 		c++

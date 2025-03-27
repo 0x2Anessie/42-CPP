@@ -1,14 +1,14 @@
 #pragma once
 
 #include <iostream>
-#include <string>
 #include <map>
 #include <algorithm>
-#include <sstream>
+#include <string>
 #include <fstream>
+#include <sstream>
 #include <stdexcept>
-#include <cctype>
 #include <cstdlib>
+#include <cctype>
 
 class BitcoinExchange
 {
@@ -20,14 +20,14 @@ class BitcoinExchange
 		~BitcoinExchange();
 
 		// ━━━━━━━━━━━━━━━━━━━━ methods ━━━━━━━━━━━━━━━━━━━ //
-		void getData(const std::string &filename);
-		void processData(const std::string &filename);
-		double getBTCvalue(const std::string &date) const;
+		void loadFile(const std::string &filename);
+		void processInput(const std::string &filename);
+		double getBitcoinValue(const std::string &date) const;
 
 	private:
-		std::map<std::string, double> ValuePerDate; // conteneur map -> association clé-valeur + tri auto selon clés
-		bool checkValue(const std::string &value) const;
-		bool checkDate(const std::string &date) const;
+		std::map<std::string, double> m_bitcoinValues;
+		bool isValidDate(const std::string &date) const;
+		bool isValidValue(const std::string &value) const;
 };
 
 //━━━━━━━━ANSI CODES━━━━━━━━━//
