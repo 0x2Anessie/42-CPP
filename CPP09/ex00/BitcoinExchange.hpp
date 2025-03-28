@@ -4,8 +4,8 @@
 #include <map>
 #include <algorithm>
 #include <string>
-#include <fstream>
 #include <sstream>
+#include <fstream>
 #include <stdexcept>
 #include <cstdlib>
 #include <cctype>
@@ -13,21 +13,33 @@
 class BitcoinExchange
 {
 	public:
-		// ━━━━━━━━━━━━━━━━━━ class init ━━━━━━━━━━━━━━━━━━ //
+		// ━━━━━━━━━━━━━━━━━━━━ class init ━━━━━━━━━━━━━━━━━━━━ //
 		BitcoinExchange();
 		BitcoinExchange(const BitcoinExchange &other);
 		BitcoinExchange &operator=(const BitcoinExchange &other);
 		~BitcoinExchange();
 
-		// ━━━━━━━━━━━━━━━━━━━━ methods ━━━━━━━━━━━━━━━━━━━ //
-		void loadFile(const std::string &filename);
-		void processInput(const std::string &filename);
+		// ━━━━━━━━━━━━━━━━━━ public methods ━━━━━━━━━━━━━━━━━━ //
+		void loadFile(const std::string &filename); // data.csv
+		void processInput(const std::string &filename); // input.txt
 		double getBitcoinValue(const std::string &date) const;
 
 	private:
-		std::map<std::string, double> m_bitcoinValues;
-		bool isValidDate(const std::string &date) const;
-		bool isValidValue(const std::string &value) const;
+		// ━━━━━━━━━━━━━━━━ private attributes ━━━━━━━━━━━━━━━━ //
+		std::map<std::string, double> BTCvaluePerDate;
+
+		// ━━━━━━━━━━━━━━━ date parsing methods ━━━━━━━━━━━━━━━ //
+		bool checkDate(const std::string &date) const;
+		bool checkDateFormat(const std::string &date) const;
+		bool checkDigits(const std::string &date) const;
+		bool checkDateRange(int year, int month, int day) const;
+
+		// ━━━━━━━━━━━━━━━ value parsing methods ━━━━━━━━━━━━━━━ //
+		bool checkValue(const std::string &value) const;
+
+		// ━━━━━━━━━━━━━━━ input's lines methods ━━━━━━━━━━━━━━━ //
+		void processLine(const std::string &line);
+		bool parseLine(const std::string &line, std::string &datePart, std::string &valuePart);
 };
 
 //━━━━━━━━ANSI CODES━━━━━━━━━//

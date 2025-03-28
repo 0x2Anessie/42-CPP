@@ -5,47 +5,52 @@
 BitcoinExchange::BitcoinExchange()
 {}
 
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &other) : m_bitcoinValues(other.m_bitcoinValues)
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &other) : BTCvaluePerDate(other.BTCvaluePerDate) 
 {}
 
 BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
 {
 	if (this != &other)
-		m_bitcoinValues = other.m_bitcoinValues;
+		BTCvaluePerDate = other.BTCvaluePerDate;
 	return (*this);
 }
 
 BitcoinExchange::~BitcoinExchange()
 {}
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ UTILS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STRING UTILS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
 bool isNotSpace(char c)
 {
 	return !std::isspace(static_cast<unsigned char>(c));
 }
 
-std::string &ltrim(std::string &s)
+std::string &trimLeft(std::string &str)
 {
-	s.erase(s.begin(), std::find_if(s.begin(), s.end(), isNotSpace));
-	return s;
+	str.erase(str.begin(), std::find_if(str.begin(), str.end(), isNotSpace));
+	return str;
 }
 
-std::string &rtrim(std::string &s)
+std::string &trimRight(std::string &str)
 {
-	s.erase(std::find_if(s.rbegin(), s.rend(), isNotSpace).base(), s.end());
-	return s;
+	str.erase(std::find_if(str.rbegin(), str.rend(), isNotSpace).base(), str.end());
+	return str;
 }
 
 std::string &trim(std::string &s)
 {
-	return ltrim(rtrim(s));
+	return trimLeft(trimRight(s));
 }
 
-bool BitcoinExchange::isValidDate(const std::string &date) const
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ DATE VALIDATION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+
+bool BitcoinExchange::checkDateFormat(const std::string &date) const
 {
-	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
-		return false;
+	return date.size() == 10 && date[4] == '-' && date[7] == '-';
+}
+
+bool BitcoinExchange::checkDigits(const std::string &date) const
+{
 	for (int i = 0; i < 4; ++i)
 		if (!std::isdigit(date[i]))
 			return false;
@@ -55,142 +60,172 @@ bool BitcoinExchange::isValidDate(const std::string &date) const
 	for (int i = 8; i < 10; ++i)
 		if (!std::isdigit(date[i]))
 			return false;
+	return true;
+}
+
+bool BitcoinExchange::checkDateRange(int year, int month, int day) const
+{
+	if (month < 1 || month > 12 || day < 1 || day > 31)
+		return false;
+	if (month == 2)
+	{
+		bool isLeap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+		return day <= 29 && (day != 29 || isLeap);
+	}
+	if (month == 4 || month == 6 || month == 9 || month == 11)
+		return day <= 30;
+	return true;
+}
+
+bool BitcoinExchange::checkDate(const std::string &date) const
+{
+	if (!checkDateFormat(date) || !checkDigits(date))
+		return false;
 
 	int year = std::atoi(date.substr(0, 4).c_str());
 	int month = std::atoi(date.substr(5, 2).c_str());
 	int day = std::atoi(date.substr(8, 2).c_str());
 
-	if (month < 1 || month > 12)
-		return false;
-	if (day < 1 || day > 31)
-		return false;
-	if (month == 2)
-	{
-		bool isLeap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-		if (day > 29 || (day == 29 && !isLeap))
-			return false;
-	}
-	else if (month == 4 || month == 6 || month == 9 || month == 11)
-	{
-		if (day > 30)
-			return false;
-	}
-	return true;
+	return checkDateRange(year, month, day);
 }
 
-bool BitcoinExchange::isValidValue(const std::string &value) const
-{
-	char* end;
-	double val = strtod(value.c_str(), &end);
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ VALUE VALIDATION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
+bool BitcoinExchange::checkValue(const std::string &value) const
+{
+	char *end;
+	double val = strtod(value.c_str(), &end);
 	return end != value.c_str() && *end == '\0' && val >= 0;
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ DATA PARSING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ FILE LOADING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
 void BitcoinExchange::loadFile(const std::string &filename)
 {
 	std::ifstream file(filename.c_str());
-	if(!file)
+	if (!file)
 		throw std::runtime_error("Could not open file");
+
 	std::string line;
 	std::string date;
 	double rate;
-	if(std::getline(file, line))
-	{
-		if(line != "date,exchange_rate")
-		{
-			std::istringstream ss(line);
-			if(std::getline(ss, date, ',') && (ss >> rate))
-				m_bitcoinValues[date] = rate;
-		}
-	}
-	while(getline(file, line))
+
+	// Lire la première ligne (en-tête)
+	if (std::getline(file, line) && line != "date,exchange_rate")
 	{
 		std::istringstream ss(line);
-		if(getline(ss, date, ',') && (ss >> rate))
-		{
-			m_bitcoinValues[date] = rate;
-		}
+		if (std::getline(ss, date, ',') && (ss >> rate))
+			BTCvaluePerDate[date] = rate;
+	}
+
+	// Lire les lignes restantes
+	while (std::getline(file, line))
+	{
+		std::istringstream ss(line);
+		if (std::getline(ss, date, ',') && (ss >> rate))
+			BTCvaluePerDate[date] = rate;
 	}
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PROCESSING DATA METHODS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ INPUT PROCESSING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
 void BitcoinExchange::processInput(const std::string &filename)
 {
 	std::ifstream file(filename.c_str());
-	if(!file)
+	if (!file)
 		throw std::runtime_error("Could not open file");
-	std::string fileLine;
-	std::string datePart;
-	std::string valuePart;
-	double value;
+
+	std::string line;
 	bool firstLine = true;
 
-	while(getline(file, fileLine))
+	while (std::getline(file, line))
 	{
-		trim(fileLine);
-		if(firstLine)
+		trim(line);
+
+		if (firstLine)
 		{
-			if(fileLine == "date | value")
+			if (line != "date | value")
 			{
-				firstLine = false;
-				continue;
+				std::cout << RED << "Error: " << RESET << "invalid header: " << line << std::endl;
+				return;
 			}
-		}
-		firstLine = false;
-		std::stringstream ss(fileLine);
-		if (fileLine[11] != '|' || fileLine[10] != ' ' || fileLine[12] != ' ')
-		{
-			fileLine = fileLine.empty() ? "empty" : fileLine;
-			std::cout << "Invalid input: " << fileLine << std::endl;
+			firstLine = false;
 			continue;
 		}
-		if(getline(ss, datePart, '|'))
-		{
-			if(!getline(ss, valuePart))
-			{
-				std::cout << "Invalid input: " << fileLine << std::endl;
-				continue;
-			}
-			datePart.erase(datePart.find_last_not_of(" \n\r\t") + 1);
-			valuePart.erase(0, valuePart.find_first_not_of(" \n\r\t"));
-			if(!isValidDate(datePart))
-			{
-				std::cout << "Invalid input: " << datePart << std::endl;
-				continue;
-			}
-			if(!isValidValue(valuePart))
-			{
-				std::cout << "Invalid input: " << valuePart << std::endl;
-				continue;
-			}
-			value = atof(valuePart.c_str());
-			if(value > 1000)
-			{
-				std::cout << "Invalid value: too large"<< std::endl;
-				continue;
-			}
-			double rate = getBitcoinValue(datePart);
-			std::cout << datePart << " => " << value << " = " << value * rate << std::endl;
-		}
-		else
-		{
-			fileLine = fileLine.empty() ? "empty" : fileLine;
-			std::cout << "Invalid input: " << fileLine << std::endl;
-		}
+
+		processLine(line);
 	}
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ GET BTC VALUE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+void BitcoinExchange::processLine(const std::string &line)
+{
+	std::string datePart, valuePart;
+	std::stringstream ss(line);
+
+	if (!parseLine(line, datePart, valuePart))
+		return;
+
+	if (!checkDate(datePart))
+	{
+		std::cout << RED << "Error: " << RESET << "invalid date: " << datePart << std::endl;
+		return;
+	}
+
+	if (!checkValue(valuePart))
+	{
+		std::cout << RED << "Error: " << RESET << "invalid value: " << valuePart << std::endl;
+		return;
+	}
+
+	double value = atof(valuePart.c_str());
+	if (value > 1000)
+	{
+		std::cout << RED << "Error: " << RESET << "invalid value: too large" << std::endl;
+		return;
+	}
+
+	double rate = getBitcoinValue(datePart);
+	std::cout << datePart << " => " << value << " = " << value * rate << std::endl;
+}
+
+bool BitcoinExchange::parseLine(const std::string &line, std::string &datePart, std::string &valuePart)
+{
+	// Vérifier si la ligne est vide
+	if (line.empty())
+	{
+		std::cout << RED << "Error: " << RESET << "invalid input: empty" <<  std::endl;
+		return false;
+	}
+
+	// Vérifier si le format de la ligne est incorrect
+	if (line.size() < 13 || line[11] != '|' || line[10] != ' ' || line[12] != ' ')
+	{
+		std::cout << RED << "Error: " << RESET << "invalid input: " << line << std::endl;
+		return false;
+	}
+
+	// Extraire les parties date et valeur
+	std::stringstream ss(line);
+	if (!std::getline(ss, datePart, '|') || !std::getline(ss, valuePart))
+	{
+		std::cout << RED << "Error: " << RESET << "invalid input: " << line << std::endl;
+		return false;
+	}
+
+	// Supprimer les espaces autour des parties extraites
+	trim(datePart);
+	trim(valuePart);
+	return true;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ GET BITCOIN VALUE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
 double BitcoinExchange::getBitcoinValue(const std::string &date) const
 {
-	std::map<std::string, double>::const_iterator it = m_bitcoinValues.lower_bound(date);
-	if(it == m_bitcoinValues.end() || it->first != date)
+	std::map<std::string, double>::const_iterator it = BTCvaluePerDate.lower_bound(date);
+	if (it == BTCvaluePerDate.end() || it->first != date)
 	{
-		if(it == m_bitcoinValues.begin())
+		if (it == BTCvaluePerDate.begin())
 			return 0;
 		--it;
 	}
