@@ -56,7 +56,7 @@ int main(int ac, char **av)
 	RPN rpn;
 	try
 	{
-		double result = rpn.calculate(str);
+		double result = rpn.evaluateExpression(str);
 		std::cout << result << std::endl;
 	}
 	catch(const std::exception &e)

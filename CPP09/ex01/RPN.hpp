@@ -16,12 +16,17 @@ class RPN
 		RPN(const RPN &other);
 		RPN &operator=(const RPN &other);
 		~RPN();
-		double calculate(const std::string str);
+
+		double evaluateExpression(const std::string &expression);
 
 	private:
-		std::stack<double, std::list<double> > _stack;
+		std::stack<double> stack;
+
 		bool isOperator(const char &token) const;
-		double operate(const char &op, const double &val1, const double &val2);
+		double performOperation(const char &op, const double &operand1, const double &operand2);
+		void processToken(const std::string &token);
+		void handleOperator(const char &op);
+		void handleOperand(const std::string &token);
 };
 
 //━━━━━━━━ANSI CODES━━━━━━━━━//

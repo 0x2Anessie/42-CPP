@@ -1,9 +1,11 @@
 #include "RPN.hpp"
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ CLASS INIT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+
 RPN::RPN()
 {}
 
-RPN::RPN(const RPN &other)
+RPN::RPN(const RPN &other) 
 {
 	*this = other;
 }
@@ -11,48 +13,64 @@ RPN::RPN(const RPN &other)
 RPN &RPN::operator=(const RPN &other)
 {
 	if (this != &other)
-	{
-		_stack = other._stack;
-	}
-	return (*this);
+		stack = other.stack;
+	return *this;
 }
 
 RPN::~RPN()
 {}
 
-double RPN::calculate(const std::string str)
-{
-	std::istringstream iss(str);
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ CALCUL METHODS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+
+double RPN::evaluateExpression(const std::string &expression) {
+	std::istringstream iss(expression);
 	std::string token;
-	double val1;
-	double val2;
 
 	while (iss >> token)
-	{
-		if (isOperator(token[0]))
-		{
-			if (_stack.size() < 2)
-				throw std::runtime_error("Error");
-			val2 = _stack.top();
-			_stack.pop();
-			val1 = _stack.top();
-			_stack.pop();
-			_stack.push(operate(token[0], val1, val2));
-		}
-		else
-		{
-			double value;
-			std::stringstream ss(token);
-			if (!(ss >> value))
-			{
-				throw std::runtime_error("Error");
-			}
-			_stack.push(value);
-		}
+		processToken(token);
+
+	if (stack.size() != 1)
+		throw std::runtime_error("Error: Invalid RPN expression");
+
+	return stack.top();
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ CALCUL UTILS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+
+void RPN::processToken(const std::string &token)
+{
+	if (token.size() == 1 && isOperator(token[0])) {
+		handleOperator(token[0]);
+	} else {
+		handleOperand(token);
 	}
-	if (_stack.size() != 1)
-		throw std::runtime_error("Error");
-	return (_stack.top());
+}
+
+void RPN::handleOperator(const char &op)
+{
+	if (stack.size() < 2) {
+		throw std::runtime_error("Error: Not enough operands for operation");
+	}
+
+	double operand2 = stack.top();
+	stack.pop();
+	double operand1 = stack.top();
+	stack.pop();
+
+	double result = performOperation(op, operand1, operand2);
+	stack.push(result);
+}
+
+void RPN::handleOperand(const std::string &token)
+{
+	double value;
+	std::stringstream ss(token);
+
+	if (!(ss >> value)) {
+		throw std::runtime_error("Error: Invalid operand");
+	}
+
+	stack.push(value);
 }
 
 bool RPN::isOperator(const char &token) const
@@ -60,20 +78,21 @@ bool RPN::isOperator(const char &token) const
 	return (token == '+' || token == '-' || token == '*' || token == '/');
 }
 
-double RPN::operate(const char &op, const double &val1, const double &val2)
+double RPN::performOperation(const char &op, const double &operand1, const double &operand2)
 {
-	switch (op)
-	{
+	switch (op) {
 		case '+':
-			return (val1 + val2);
+			return operand1 + operand2;
 		case '-':
-			return (val1 - val2);
+			return operand1 - operand2;
 		case '*':
-			return (val1 * val2);
+			return operand1 * operand2;
 		case '/':
-			if (val2 == 0)
-				throw std::runtime_error("Error");
-			return (val1 / val2);
+			if (operand2 == 0) {
+				throw std::runtime_error("Error: Division by zero");
+			}
+			return operand1 / operand2;
+		default:
+			throw std::runtime_error("Error: Unknown operator");
 	}
-	return (0);
 }
