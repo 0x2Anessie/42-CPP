@@ -20,6 +20,10 @@ class RPN
 		double evaluateExpression(const std::string &expression);
 
 	private:
+		// structure Last In, First Out qui permet de sortir les deux derniers operandes quand
+		// on tombe sur un operateur. Ensuite on ajoute le resultat de l'operation dans la pile.
+		// std::stack<double> est donc une pile de double dans laquelle on stock nos operande en
+		// attendant de trouver des operations, et les resultats apres les avoir fait.
 		std::stack<double> stack;
 
 		bool isOperator(const char &token) const;

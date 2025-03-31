@@ -25,18 +25,20 @@ bool isNotSpace(char c)
 	return !std::isspace(static_cast<unsigned char>(c));
 }
 
+// 5
 std::string &trimLeft(std::string &str)
 {
 	str.erase(str.begin(), std::find_if(str.begin(), str.end(), isNotSpace));
 	return str;
 }
-
+// 4
 std::string &trimRight(std::string &str)
 {
 	str.erase(std::find_if(str.rbegin(), str.rend(), isNotSpace).base(), str.end());
 	return str;
 }
 
+// 3
 std::string &trim(std::string &s)
 {
 	return trimLeft(trimRight(s));
@@ -44,11 +46,13 @@ std::string &trim(std::string &s)
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ DATE VALIDATION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
+// 9
 bool BitcoinExchange::checkDateFormat(const std::string &date) const
 {
 	return date.size() == 10 && date[4] == '-' && date[7] == '-';
 }
 
+// 10
 bool BitcoinExchange::checkDigits(const std::string &date) const
 {
 	for (int i = 0; i < 4; ++i)
@@ -63,6 +67,7 @@ bool BitcoinExchange::checkDigits(const std::string &date) const
 	return true;
 }
 
+// 11
 bool BitcoinExchange::checkDateRange(int year, int month, int day) const
 {
 	if (month < 1 || month > 12 || day < 1 || day > 31)
@@ -77,6 +82,7 @@ bool BitcoinExchange::checkDateRange(int year, int month, int day) const
 	return true;
 }
 
+// 8
 bool BitcoinExchange::checkDate(const std::string &date) const
 {
 	if (!checkDateFormat(date) || !checkDigits(date))
@@ -91,6 +97,7 @@ bool BitcoinExchange::checkDate(const std::string &date) const
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ VALUE VALIDATION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
+// 12
 bool BitcoinExchange::checkValue(const std::string &value) const
 {
 	char *end;
@@ -100,6 +107,7 @@ bool BitcoinExchange::checkValue(const std::string &value) const
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ FILE LOADING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
+// 1
 void BitcoinExchange::loadFile(const std::string &filename)
 {
 	std::ifstream file(filename.c_str());
@@ -129,6 +137,7 @@ void BitcoinExchange::loadFile(const std::string &filename)
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ INPUT PROCESSING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
+// 2
 void BitcoinExchange::processInput(const std::string &filename)
 {
 	std::ifstream file(filename.c_str());
@@ -152,11 +161,11 @@ void BitcoinExchange::processInput(const std::string &filename)
 			firstLine = false;
 			continue;
 		}
-
 		processLine(line);
 	}
 }
 
+// 6
 void BitcoinExchange::processLine(const std::string &line)
 {
 	std::string datePart, valuePart;
@@ -188,6 +197,7 @@ void BitcoinExchange::processLine(const std::string &line)
 	std::cout << datePart << " => " << value << " = " << value * rate << std::endl;
 }
 
+// 7
 bool BitcoinExchange::parseLine(const std::string &line, std::string &datePart, std::string &valuePart)
 {
 	// Vérifier si la ligne est vide
@@ -220,6 +230,7 @@ bool BitcoinExchange::parseLine(const std::string &line, std::string &datePart, 
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ GET BITCOIN VALUE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
+// 13
 double BitcoinExchange::getBitcoinValue(const std::string &date) const
 {
 	std::map<std::string, double>::const_iterator it = BTCvaluePerDate.lower_bound(date);

@@ -44,7 +44,7 @@ int main(int ac, char **av)
 {
 	if (ac != 2)
 	{
-		std::cout << "Usage: ./rpn \"expression\"" << std::endl;
+		std::cerr << RED_BOLD << "ERROR! You must enter the program name and the \"expression\"" << RESET << std::endl;
 		return (1);
 	}
 	std::string str = av[1];
