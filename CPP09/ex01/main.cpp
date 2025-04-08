@@ -47,12 +47,15 @@ int main(int ac, char **av)
 		std::cerr << RED_BOLD << "ERROR! You must enter the program name and the \"expression\"" << RESET << std::endl;
 		return (1);
 	}
+
 	std::string str = av[1];
+
 	if (!verifArg(str))
 	{
 		std::cout << "Error" << std::endl;
 		return (1);
 	}
+	
 	RPN rpn;
 	try
 	{
