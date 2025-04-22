@@ -20,23 +20,26 @@ bool isNumber(const std::string &str)
 	return (true);
 }
 
-bool verifArg(const std::string &str)
+bool checkArg(const std::string &str)
 {
 	std::istringstream iss(str);
-	std::string token;
-	while(iss >> token)
+	std::string arg;
+
+	while(iss >> arg)
 	{
-		if (!isOperator(token[0]) && !isNumber(token))
-			return (false);
-		if (token[0] == '-' && token[1] != '\0' && token[1] != ' ')
+		if (!isOperator(arg[0]) && !isNumber(arg))
 			return false;
-		if (token[0] == '+' && token[1] != '\0' && token[1] != ' ')
+
+		if (arg[0] == '+' && arg[1] != '\0' && arg[1] != ' ')
 			return false;
-		if (token[0] == '*' && token[1] != '\0' && token[1] != ' ')
+		if (arg[0] == '-' && arg[1] != '\0' && arg[1] != ' ')
 			return false;
-		if (token[0] == '/' && token[1] != '\0' && token[1] != ' ')
+		if (arg[0] == '*' && arg[1] != '\0' && arg[1] != ' ')
+			return false;
+		if (arg[0] == '/' && arg[1] != '\0' && arg[1] != ' ')
 			return false;
 	}
+
 	return true;
 }
 
@@ -50,7 +53,7 @@ int main(int ac, char **av)
 
 	std::string str = av[1];
 
-	if (!verifArg(str))
+	if (!checkArg(str))
 	{
 		std::cout << "Error" << std::endl;
 		return (1);

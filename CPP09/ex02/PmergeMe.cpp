@@ -1,5 +1,7 @@
 #include "PmergeMe.hpp"
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ CLASS INIT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+
 PmergeMe::PmergeMe()
 {}
 
@@ -146,17 +148,17 @@ void sortVector(std::vector<double> &container)
 	{
 		for (size_t i = 1; i < container.size(); i += 2)
 			pairs.push_back(container[i]);
-		//std::cout << "pairs: ";
-		//printVector(pairs);
+		std::cout << "pairs: ";
+		printVector(pairs);
 		sortVector(pairs);
 		std::vector<double> main = pairs;
-		//std::cout << "main init: ";
-		//printVector(main);
+		std::cout << "main init: ";
+		printVector(main);
 		std::vector<double> pending;
 		for (size_t i = 0; i < container.size(); i += 2)
 			pending.push_back(container[i]);
-		//std::cout << "pending: ";
-		//printVector(pending);
+		std::cout << "pending: ";
+		printVector(pending);
 		std::vector<double> jacobsthalVec;
 		getJacobVector(jacobsthalVec);
 		for (size_t index = 0; index < pending.size(); index++)
@@ -167,24 +169,24 @@ void sortVector(std::vector<double> &container)
 				j++;
 			if (j != 0)
 			{
-				//std::cout << "index: " << index << " jacobsthalVec[j]: " << jacobsthalVec[j] << " jacobsthalVec[j - 1]: "<< jacobsthalVec[j - 1] << std::endl;
-				//std::cout << YELLOW << "pending.size() - 1: " << pending.size() - 1 << RESET << std::endl;
+				std::cout << "index: " << index << " jacobsthalVec[j]: " << jacobsthalVec[j] << " jacobsthalVec[j - 1]: "<< jacobsthalVec[j - 1] << std::endl;
+				std::cout << YELLOW << "pending.size() - 1: " << pending.size() - 1 << RESET << std::endl;
 				if (pending.size() - 1 <= jacobsthalVec[j])
 				{
 					jacobIndex = pending.size() - (index - jacobsthalVec[j - 1]);
-					//std::cout << RED << "jacobIndex: " << jacobIndex << RESET << std::endl;
+					std::cout << RED << "jacobIndex: " << jacobIndex << RESET << std::endl;
 				}
 				else
 				{
 					jacobIndex = jacobsthalVec[j] + 1 - (index - jacobsthalVec[j - 1]);
-					//std::cout << GREEN << "jacobIndex: " << jacobIndex << RESET << std::endl;
+					std::cout << GREEN << "jacobIndex: " << jacobIndex << RESET << std::endl;
 				}
 			}
 			else
 				jacobIndex = 0;
 			vectorBinaryInsert(main, pending[jacobIndex]);
-			//std::cout << "main insert: ";
-			//printVector(main);
+			std::cout << "main insert: ";
+			printVector(main);
 			container = main;
 		}
 	}

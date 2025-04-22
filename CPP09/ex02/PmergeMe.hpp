@@ -12,19 +12,24 @@
 
 class PmergeMe
 {
-	private:
-		std::vector<double>	m_vector;
-		std::deque<double>	m_deque;
-		size_t				m_size;
-
 	public:
+		// ━━━━━━━━━━━━━━━━━━━━ class init ━━━━━━━━━━━━━━━━━━━━ //
 		PmergeMe();
 		PmergeMe(PmergeMe const &other);
 		PmergeMe &operator=(PmergeMe const &other);
 		~PmergeMe();
-		PmergeMe(int ac, char **av);
+
+		// ━━━━━━━━━━━━━━━━━━ public methods ━━━━━━━━━━━━━━━━━━ //
 		void	merge();
+		PmergeMe(int ac, char **av);
+
+	private:
+		// ━━━━━━━━━━━━━━━━ private attribute ━━━━━━━━━━━━━━━━━ //
+		std::vector<double>	m_vector;
+		std::deque<double>	m_deque;
+		size_t				m_size;
 };
+
 
 //━━━━━━━━ANSI CODES━━━━━━━━━//
 #define RED			"\x1b[31m"

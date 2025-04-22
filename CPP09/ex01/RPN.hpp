@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <stack>
@@ -12,25 +13,28 @@
 class RPN
 {
 	public:
+		// ━━━━━━━━━━━━━━━━━━━━ class init ━━━━━━━━━━━━━━━━━━━━ //
 		RPN();
 		RPN(const RPN &other);
 		RPN &operator=(const RPN &other);
 		~RPN();
-
-		double evaluateExpression(const std::string &expression);
+		// ━━━━━━━━━━━━━━━━━━ public methods ━━━━━━━━━━━━━━━━━━ //
+		double	evaluateExpression(const std::string &expression);
 
 	private:
+		// ━━━━━━━━━━━━━━━━ private attribute ━━━━━━━━━━━━━━━━━ //
 		// structure Last In, First Out qui permet de sortir les deux derniers operandes quand
 		// on tombe sur un operateur. Ensuite on ajoute le resultat de l'operation dans la pile.
 		// std::stack<double> est donc une pile de double dans laquelle on stock nos operande en
 		// attendant de trouver des operations, et les resultats apres les avoir fait.
 		std::stack<double> stack;
 
-		bool isOperator(const char &token) const;
-		double performOperation(const char &op, const double &operand1, const double &operand2);
-		void processToken(const std::string &token);
-		void handleOperator(const char &op);
-		void handleOperand(const std::string &token);
+		// ━━━━━━━━━━━━━━━━━━ private methods ━━━━━━━━━━━━━━━━━ //
+		bool	isOperator(const char &token) const;
+		double	performOperation(const char &op, const double &operand1, const double &operand2);
+		void	processToken(const std::string &token);
+		void	handleOperator(const char &op);
+		void	handleOperand(const std::string &token);
 };
 
 //━━━━━━━━ANSI CODES━━━━━━━━━//
