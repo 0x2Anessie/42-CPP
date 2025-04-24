@@ -26,6 +26,8 @@ class BitcoinExchange
 
 	private:
 		// ━━━━━━━━━━━━━━━━ private attributes ━━━━━━━━━━━━━━━━ //
+		// fonctionnement key(date)-value(taux de change) / tri chronologique automatique
+		// utilisation de lower_bound pour trouver la date precedente la plus proche comme demande dans le sujet
 		std::map<std::string, double> BTCvaluePerDate;
 
 		// ━━━━━━━━━━━━━━━ date parsing methods ━━━━━━━━━━━━━━━ //
