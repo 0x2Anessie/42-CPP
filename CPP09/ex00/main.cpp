@@ -16,7 +16,7 @@ int main(int ac, char **av)
 	{
 		BitcoinExchange	btc;
 
-		btc.loadFile("data.csv"); // lit le fichier data.csv et stocke dans std::map valuePerDate
+		btc.GetDataFile("data.csv"); // lit le fichier data.csv et stocke dans std::map valuePerDate
 		btc.processInput(av[1]); // check les entrées du fichier et calcule la valeur du btc pour chaque date
 	}
 	catch(const std::exception& e)

@@ -20,7 +20,7 @@ class BitcoinExchange
 		~BitcoinExchange();
 
 		// ━━━━━━━━━━━━━━━━━━ public methods ━━━━━━━━━━━━━━━━━━ //
-		void	loadFile(const std::string &filename); // data.csv
+		void	GetDataFile(const std::string &filename); // data.csv
 		void	processInput(const std::string &filename); // input.txt
 		double	getBitcoinValue(const std::string &date) const;
 
@@ -33,7 +33,6 @@ class BitcoinExchange
 		// ━━━━━━━━━━━━━━━ date parsing methods ━━━━━━━━━━━━━━━ //
 		bool	checkDate(const std::string &date) const;
 		bool	checkDateFormat(const std::string &date) const;
-		bool	checkDigits(const std::string &date) const;
 		bool	checkDateRange(int year, int month, int day) const;
 
 		// ━━━━━━━━━━━━━━━ value parsing methods ━━━━━━━━━━━━━━━ //
@@ -43,6 +42,11 @@ class BitcoinExchange
 		void	processLine(const std::string &line);
 		bool	parseLine(const std::string &line, std::string &datePart, std::string &valuePart);
 };
+
+bool		isNotSpace(char c);
+std::string &trimLeft(std::string &str);
+std::string &trimRight(std::string &str);
+std::string &trim(std::string &s);
 
 //━━━━━━━━ANSI CODES━━━━━━━━━//
 #define RED			"\x1b[31m"

@@ -18,64 +18,55 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
 BitcoinExchange::~BitcoinExchange()
 {}
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STRING UTILS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ GET DATA.CSV ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
-bool isNotSpace(char c)
+// Lit le fichier data.csv et stocke taux de change correspondant à chaque date dans la map
+void BitcoinExchange::GetDataFile(const std::string &filename)
 {
-	return !std::isspace(static_cast<unsigned char>(c));
-}
+	std::ifstream dataFile(filename.c_str()); // ouvre le fichier data.csv
+	if (!dataFile)
+		throw std::runtime_error("Could not open file");
 
-// 5
-std::string &trimLeft(std::string &str)
-{
-	str.erase(str.begin(), std::find_if(str.begin(), str.end(), isNotSpace));
-	return str;
-}
-// 4
-std::string &trimRight(std::string &str)
-{
-	str.erase(std::find_if(str.rbegin(), str.rend(), isNotSpace).base(), str.end());
-	return str;
-}
+	std::string line;
+	std::string date;
+	double rate;
 
-// 3
-std::string &trim(std::string &s)
-{
-	return trimLeft(trimRight(s));
-}
+	// recupère les donnees de la première ligne si ce n'est pas le header
+	if (std::getline(dataFile, line) && line != "date,exchange_rate") 
+	{
+		std::istringstream ss(line);
+		if (std::getline(ss, date, ',') && (ss >> rate)) // extrait la date et convertit le taux de change de str a double
+			BTCvaluePerDate[date] = rate;
+	}
 
-// Renvoie true si la valeur est valide (c'est-à-dire un nombre positif), false sinon
-bool BitcoinExchange::checkValue(const std::string &value) const
-{
-	char *end;
-	double val = strtod(value.c_str(), &end); // on utilise strtod pour convertir la chaîne en double
-
-	return end != value.c_str() && *end == '\0' && val >= 0; // conversion réussie et valeur est positive
+	// si il y a un header, on passe a ce bloc et on lit et stocke les données de toutes les lignes
+	while (std::getline(dataFile, line))
+	{
+		std::istringstream ss(line);
+		if (std::getline(ss, date, ',') && (ss >> rate))
+			BTCvaluePerDate[date] = rate; // on stocke la date et le taux de change dans la map
+	}
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ DATE PARSING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
-// Verifie si la date est au format YYYY-MM-DD
 bool BitcoinExchange::checkDateFormat(const std::string &date) const
 {
-	return date.size() == 10 && date[4] == '-' && date[7] == '-';
-}
+	// Vérifie le format de la date (YYYY-MM-DD)
+	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
+		return false;
 
-// Verifie que les caracteres de la date sont des chiffres
-bool BitcoinExchange::checkDigits(const std::string &date) const
-{
+	// Vérifie que les caractères de la date sont des chiffres
 	for (int i = 0; i < 4; ++i) // YYYY
 		if (!std::isdigit(date[i]))
 			return false;
-
-			for (int i = 5; i < 7; ++i) // MM
-			if (!std::isdigit(date[i]))
+	for (int i = 5; i < 7; ++i) // MM
+		if (!std::isdigit(date[i]))
 			return false;
-
 	for (int i = 8; i < 10; ++i) // DD
 		if (!std::isdigit(date[i]))
 			return false;
-
+			
 	return true;
 }
 
@@ -103,7 +94,7 @@ bool BitcoinExchange::checkDateRange(int year, int month, int day) const
 bool BitcoinExchange::checkDate(const std::string &date) const
 {
 	// Vérifier si la date est au format YYYY-MM-DD et qu'elle contient des chiffres
-	if (!checkDateFormat(date) || !checkDigits(date))
+	if (!checkDateFormat(date))
 	return false;
 	
 	// extrait les parties de la date YYYY-MM-DD et les convertit en entiers
@@ -114,7 +105,20 @@ bool BitcoinExchange::checkDate(const std::string &date) const
 	return checkDateRange(year, month, day); // retourne true si la date est valide
 }
 
-bool BitcoinExchange::parseLine(const std::string &line, std::string &datePart, std::string &valuePart)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ VALUE PARSING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+
+// Renvoie true si la valeur est valide (c'est-à-dire un nombre positif), false sinon
+bool BitcoinExchange::checkValue(const std::string &value) const
+{
+	char *end;
+	double val = strtod(value.c_str(), &end); // on utilise strtod pour convertir la chaîne en double
+
+	return end != value.c_str() && *end == '\0' && val >= 0; // conversion réussie et valeur est positive
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ INPUT'S LINES PARSING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+
+bool BitcoinExchange::parseLine(const std::string &line, std::string &dateInput, std::string &valueInput)
 {
 	// Vérifier si la ligne est vide
 	if (line.empty())
@@ -130,63 +134,36 @@ bool BitcoinExchange::parseLine(const std::string &line, std::string &datePart, 
 		return false;
 	}
 
-	// Extraire les parties date et valeur
+	// Extraire la date et la valeur de la ligne
 	std::stringstream ss(line);
-	if (!std::getline(ss, datePart, '|') || !std::getline(ss, valuePart))
+	if (!std::getline(ss, dateInput, '|') || !std::getline(ss, valueInput))
 	{
 		std::cout << RED << "Error: " << RESET << "invalid input: " << line << std::endl;
 		return false;
 	}
 
 	// Supprimer les espaces autour des parties extraites
-	trim(datePart);
-	trim(valuePart);
+	trim(dateInput);
+	trim(valueInput);
+
 	return true;
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ FILE LOADING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ GET THE INPUT'S DATA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
-// Lit le fichier data.csv et stocke les valeurs dans une map
-void BitcoinExchange::loadFile(const std::string &filename)
-{
-	std::ifstream file(filename.c_str()); // ouvre le fichier data.csv
-	if (!file)
-		throw std::runtime_error("Could not open file");
-
-	std::string line;
-	std::string date;
-	double rate;
-
-	// Verife la première ligne du fichier
-	if (std::getline(file, line) && line != "date,exchange_rate") 
-	{
-		std::istringstream ss(line);
-		if (std::getline(ss, date, ',') && (ss >> rate)) 
-			BTCvaluePerDate[date] = rate;
-	}
-
-	while (std::getline(file, line))
-	{
-		std::istringstream ss(line);
-		if (std::getline(ss, date, ',') && (ss >> rate))
-			BTCvaluePerDate[date] = rate;
-	}
-}
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ INPUT PROCESSING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
-
+// On lui donne av[1] (input.txt) et il va le lire ligne par ligne
 void BitcoinExchange::processInput(const std::string &filename)
 {
-	std::ifstream file(filename.c_str());
-	if (!file)
+	std::ifstream inputFile(filename.c_str()); // ouvre le fichier input.txt
+	if (!inputFile)
 		throw std::runtime_error("Could not open file");
 
 	std::string line;
 	bool firstLine = true;
 
-	while (std::getline(file, line))
+	while (std::getline(inputFile, line)) // on lit input.txt ligne par ligne
 	{
-		trim(line);
+		trim(line); // on supprime les espaces autour des infos
 
 		if (firstLine)
 		{
@@ -195,44 +172,46 @@ void BitcoinExchange::processInput(const std::string &filename)
 				std::cout << RED << "Error: " << RESET << "invalid header: " << line << std::endl;
 				return;
 			}
-			firstLine = false;
+			firstLine = false; // si la première ligne est le header, on passe a false pour  indiquer que les lignes suivantes ne sont plus des header
 			continue;
 		}
-		processLine(line);
+
+		processLine(line); // on traite chaque ligne avec la fonction processLine
 	}
 }
 
 void BitcoinExchange::processLine(const std::string &line)
 {
-	std::string datePart, valuePart;
+	std::string dateInput;
+	std::string valueInput;
 	std::stringstream ss(line);
 
 	// appel des fonctions de parsing
-	if (!parseLine(line, datePart, valuePart))
+	if (!parseLine(line, dateInput, valueInput))
 		return;
-	if (!checkDate(datePart))
+	if (!checkDate(dateInput))
 	{
-		std::cout << RED << "Error: " << RESET << "invalid date: " << datePart << std::endl;
+		std::cout << RED << "Error: " << RESET << "invalid date: " << dateInput << std::endl;
 		return;
 	}
-	if (!checkValue(valuePart))
+	if (!checkValue(valueInput))
 	{
-		std::cout << RED << "Error: " << RESET << "invalid value: " << valuePart << std::endl;
+		std::cout << RED << "Error: " << RESET << "invalid value: " << valueInput << std::endl;
 		return;
 	}
 
-	// Verifie si la valeur est positive et ne depasse pas 1000
-	double value = atof(valuePart.c_str());
+	// Verifie que la valeur ne depasse pas 1000
+	double value = atof(valueInput.c_str());
 	if (value > 1000)
 	{
 		std::cout << RED << "Error: " << RESET << "too large (over 1000)" << std::endl;
 		return;
 	}
 
-	double rate = getBitcoinValue(datePart); // on utilise la date pour trouver le taux de change
-	std::cout << datePart << " => " << value << " = " << value * rate << std::endl; // la valeur est multipliee par le taux de change
-}
+	double rate = getBitcoinValue(dateInput); // on utilise la date pour trouver le taux de change
 
+	std::cout << dateInput << " => " << value << " = " << value * rate << std::endl; // valeur * taux de change
+}
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ GET BITCOIN VALUE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 
@@ -241,11 +220,36 @@ double BitcoinExchange::getBitcoinValue(const std::string &date) const
 	// on va chercher la date exacte ou la date precedente la plus proche (avec lower_bound)
 	std::map<std::string, double>::const_iterator it = BTCvaluePerDate.lower_bound(date);
 
-	if (it == BTCvaluePerDate.end() || it->first != date)
+	if (it == BTCvaluePerDate.end() || it->first != date) // si it est à la fin ou si la date n'existe pas
 	{
-		if (it == BTCvaluePerDate.begin())
+		if (it == BTCvaluePerDate.begin()) // si la date est avant la première date de la map
 			return 0;
 		--it;
 	}
-	return it->second;
+	return it->second; // renvoie le taux de change
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ TRIM UTILS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+
+// Trim les espaces à gauche et à droite d'une chaîne
+bool isNotSpace(char c)
+{
+	return !std::isspace(static_cast<unsigned char>(c));
+}
+
+std::string &trimLeft(std::string &str)
+{
+	str.erase(str.begin(), std::find_if(str.begin(), str.end(), isNotSpace));
+	return str;
+}
+
+std::string &trimRight(std::string &str)
+{
+	str.erase(std::find_if(str.rbegin(), str.rend(), isNotSpace).base(), str.end());
+	return str;
+}
+
+std::string &trim(std::string &s)
+{
+	return trimLeft(trimRight(s));
 }
