@@ -25,11 +25,13 @@ class PmergeMe
 
 	private:
 		// ━━━━━━━━━━━━━━━━ private attribute ━━━━━━━━━━━━━━━━━ //
-		std::vector<double>	m_vector;
-		std::deque<double>	m_deque;
-		size_t				m_size;
+		std::vector<double>	vectorContainer;
+		std::deque<double>	dequeContainer;
+		size_t				containerSize;
 };
 
+void printVectorContent(const std::vector<double> &vectorContainer);
+void printDequeContent(const std::deque<double> &dequeContainer);
 
 //━━━━━━━━ANSI CODES━━━━━━━━━//
 #define RED			"\x1b[31m"

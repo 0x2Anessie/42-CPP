@@ -26,15 +26,17 @@ bool isNumber(const std::string &str)
 
 bool checkArg(const std::string &str)
 {
-	std::istringstream iss(str);
+	std::istringstream iss(str); // on utilise istringstream pour separer les tokens
 	std::string arg;
 
+	// on avance dans la string 
 	while(iss >> arg)
 	{
+		// on verifie si le token est un operateur ou un nombre
 		if (!isOperator(arg[0]) && !isNumber(arg))
 			return false;
 
-		// check si le premier char est un opérateur
+		// et que si c'est un operateur, il ne soit pas collé à un autre operateur ou à un nombre
 		if (arg[0] == '+' && arg[1] != '\0' && arg[1] != ' ')
 			return false;
 		if (arg[0] == '-' && arg[1] != '\0' && arg[1] != ' ')
@@ -45,7 +47,7 @@ bool checkArg(const std::string &str)
 			return false;
 	}
 
-	return true;
+	return true; // si on a pas eu d'erreur dans l'operation, on renvoie true
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ MAIN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
@@ -68,7 +70,7 @@ int main(int ac, char **av)
 	RPN rpn;
 	try
 	{
-		double result = rpn.evaluateExpression(str);
+		double result = rpn.evaluateExpression(str); // renvoie le resultat de l'expression
 		std::cout << result << std::endl;
 	}
 	catch(const std::exception &e)

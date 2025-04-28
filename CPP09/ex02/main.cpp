@@ -11,7 +11,7 @@ int main(int ac, char **av)
 		return (1);
 	}
 
-	// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ process file and get btc value ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
+	// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ merge-insert sorting ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ //
 	try
 	{
 		PmergeMe pmergeMe(ac, av);
@@ -19,7 +19,7 @@ int main(int ac, char **av)
 	}
 	catch(const std::exception &e)
 	{
-		std::cerr << RED << "Error: " << e.what() << RESET << std::endl;
+		std::cerr << RED_BOLD << "Error: " << e.what() << RESET << std::endl;
 		return (1);
 	}
 }
